@@ -1,0 +1,26 @@
+:root {
+  --bg-default-light: #ffffff;
+  --bg-muted-light: #f6f8fa;
+  --border-light: #d1d9e0;
+  --fg-default-light: #1f2328;
+
+  --bg-default-dark: #0d1116;
+  --bg-muted-dark: #020408;
+  --border-dark: #363e46;
+  --fg-default-dark: #d1d7dc;
+}
+html[data-color-mode="dark"] body { background-color: var(--bg-default-dark); color: var(--fg-default-dark); }
+html[data-color-mode="light"] body { background-color: var(--bg-default-light); color: var(--fg-default-light); }
+.card-like { border:1px solid; border-radius:6px; }
+html[data-color-mode="light"] .card-like { border-color: var(--border-light); background:#fff; }
+html[data-color-mode="dark"] .card-like { border-color: var(--border-dark); background:#0f141a; }
+.card-like.linked:hover { transform: translateY(-1px); transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background-color .12s ease; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.card-title { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.card-desc { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.card-tag { max-width:40%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding:0 .5rem; border-radius:999px; border:1px solid currentColor; font-size:12px; opacity:.9; }
+.meta-muted { opacity:.75; }
+.site-footer { border-top:1px solid; }
+html[data-color-mode="light"] .site-footer { border-color: var(--border-light); }
+html[data-color-mode="dark"] .site-footer { border-color: var(--border-dark); }
+.profile-list li { margin:.25rem 0; line-height:1.35; }
+.inline-icon { vertical-align:text-bottom; }

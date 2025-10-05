@@ -1,0 +1,53 @@
+---
+layout: default
+---
+<div class="d-flex flex-column flex-md-row gap-4">
+  <aside class="col-12 col-md-4" id="about">
+    <div class="card-like p-3">
+      <div class="mb-3">
+        <div class="CircleBadge CircleBadge--large mb-2" style="background:#ddd;"></div>
+      </div>
+      <h2 class="h4">About</h2>
+      <ul class="list-style-none p-0 m-0 profile-list">
+        <li><strong>Name:</strong> Yujia Zhou</li>
+        <li><strong>Birthday:</strong> TBD</li>
+        <li><strong>Location:</strong> TBD</li>
+        <li><strong>School:</strong> TBD</li>
+        <li><strong>Hobbies:</strong> TBD</li>
+      </ul>
+    </div>
+  </aside>
+
+  <section class="col-12 col-md-8">
+    <header class="mb-4">
+      <h1 class="f2-light m-0">{{ site.tagline }}</h1>
+    </header>
+
+    <section class="mb-5">
+      <h2 class="h4 mb-3">Popular</h2>
+      <div class="grid gutter-condensed">
+        {% assign pinned = site.pinned_projects %}
+        {% for slug in pinned %}
+          {% for prj in site.projects %}
+            {% if prj.slug == slug %}
+              <div class="col-12 col-md-6 mb-3">
+                {% include card.html item=prj type='project' %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <section>
+      <h2 class="h4 mb-3">Latest Blog</h2>
+      <div class="grid gutter-condensed">
+        {% for post in site.posts limit:3 %}
+          <div class="col-12 col-md-6 mb-3">
+            {% include card.html item=post type='post' %}
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  </section>
+</div>

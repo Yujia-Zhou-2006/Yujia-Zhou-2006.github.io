@@ -1,0 +1,34 @@
+title: "Yujia-site"
+tagline: "Hello, I am Yujia Zhou"
+theme:
+
+social_order:
+  - github
+  - email
+  - wechat
+  - instagram
+  - red
+  - itch
+  - pixilart
+
+social:
+  github: "https://github.com/_placeholder"
+  email: "mailto:you@example.com"
+  wechat_id: "Creeper3445"
+  instagram: "https://instagram.com/_placeholder"
+  red: "https://www.xiaohongshu.com/user/_placeholder"
+  itch: "https://_placeholder.itch.io"
+  pixilart: "https://www.pixilart.com/_placeholder"
+
+pinned_projects:
+  - bf-109-f4-models
+  - p51-c-models
+  - night-impression-pixel
+  - nonlinear-sprite-motion-pico8
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:slug/
+
+permalink: /blog/:year/:month/:day/:title/

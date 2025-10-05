@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" data-color-mode="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ page.title | default: site.title }}</title>
+  <link rel="stylesheet" href="https://unpkg.com/@primer/css@^21/dist/primer.css">
+  <link rel="stylesheet" href="{{ '/assets/styles/theme-tokens.css' | relative_url }}">
+</head>
+<body>
+  {% include header.html %}
+  <main class="container-xl px-3 my-4 my-md-6">
+    {{ content }}
+  </main>
+  {% include footer.html %}
+  <script src="{{ '/assets/scripts/theme-toggle.js' | relative_url }}"></script>
+  <script src="{{ '/assets/scripts/copy-wechat.js' | relative_url }}"></script>
+</body>
+</html>

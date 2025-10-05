@@ -1,0 +1,21 @@
+---
+layout: default
+---
+<article class="markdown-body">
+  <header class="mb-3">
+    <h1 class="f2-light">{{ page.title }}</h1>
+    {% if page.subtitle %}<p class="lead">{{ page.subtitle }}</p>{% endif %}
+    <p class="color-fg-muted">
+      {{ page.type | upcase }}{% if page.year %} • {{ page.year }}{% endif %}
+      {% if page.tools and page.tools.size > 0 %} • Tools: {{ page.tools | join: ", " }}{% endif %}
+    </p>
+    {% if page.links %}
+      <p>
+        {% if page.links.repo %}<a href="{{ page.links.repo }}">[Repo]</a>{% endif %}
+        {% if page.links.demo %}<a href="{{ page.links.demo }}" class="ml-2">[Demo]</a>{% endif %}
+        {% if page.links.video %}<a href="{{ page.links.video }}" class="ml-2">[Video]</a>{% endif %}
+      </p>
+    {% endif %}
+  </header>
+  {{ content }}
+</article>

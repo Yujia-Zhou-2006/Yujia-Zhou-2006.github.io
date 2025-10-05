@@ -1,0 +1,10 @@
+---
+layout: default
+---
+<article class="markdown-body">
+  <header class="mb-3">
+    <h1 class="f2-light">{{ page.title }}</h1>
+    <p class="color-fg-muted">{{ page.date | date: "%Y-%m-%d" }}{% if page.tags %} — {{ page.tags | join: ", " }}{% endif %}</p>
+  </header>
+  {{ content }}
+</article>

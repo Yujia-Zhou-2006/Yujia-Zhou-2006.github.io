@@ -1,0 +1,21 @@
+<div class="d-flex flex-wrap flex-justify-center gap-3">
+  {% assign order = site.social_order %}
+  {% for key in order %}
+    {% if key == 'github' %}
+      <a href="{{ site.social.github }}" class="Link--secondary"><span class="inline-icon"></span> GitHub</a>
+    {% elsif key == 'email' %}
+      <a href="{{ site.social.email }}" class="Link--secondary"><span class="inline-icon">✉</span> Email</a>
+    {% elsif key == 'wechat' %}
+      <button class="btn btn-sm" data-action="copy-wechat" data-id="{{ site.social.wechat_id }}"><span class="inline-icon">💬</span> WeChat ⧉</button>
+    {% elsif key == 'instagram' %}
+      <a href="{{ site.social.instagram }}" class="Link--secondary"><span class="inline-icon">📷</span> Instagram</a>
+    {% elsif key == 'red' %}
+      <a href="{{ site.social.red }}" class="Link--secondary"><span class="inline-icon">🗒</span> RED</a>
+    {% elsif key == 'itch' %}
+      <a href="{{ site.social.itch }}" class="Link--secondary"><span class="inline-icon">🚀</span> itch.io</a>
+    {% elsif key == 'pixilart' %}
+      <a href="{{ site.social.pixilart }}" class="Link--secondary"><span class="inline-icon">🖼</span> Pixilart</a>
+    {% endif %}
+  {% endfor %}
+  <div id="toast" hidden class="position-fixed right-3 top-3 p-2 px-3 color-bg-subtle color-fg-default rounded-2 border">Copied</div>
+</div>
