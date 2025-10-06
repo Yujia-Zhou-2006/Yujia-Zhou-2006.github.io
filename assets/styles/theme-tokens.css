@@ -1,3 +1,13 @@
+/* 基础布局 */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  min-height: 100vh;
+}
+
 /* Footer样式 */
 .site-footer {
   color: var(--border-light);
@@ -15,7 +25,8 @@
 }
 
 html[data-color-mode="dark"] .site-footer {
-  color: var(--border-dark);
+  background-color: var(--bg-muted-dark);
+  border-top-color: var(--border-dark);
 }
 :root {
   --bg-default-light: #ffffff;
@@ -87,7 +98,12 @@ html[data-color-mode="dark"] .card-tag {
 .site-footer { 
   padding-top: 1rem; 
   padding-bottom: 1rem; 
-  font-size: 0.95rem; 
+  font-size: 12px;
+  position: sticky;
+  bottom: 0;
+  background-color: var(--bg-muted-light);
+  border-top: 1px solid var(--border-light);
+  z-index: 100;
 }
 
 .sidebar-divider { 
@@ -132,6 +148,22 @@ html[data-color-mode="dark"] .header-nav a.Link--primary:hover {
 html[data-color-mode="dark"] header.width-full {
   background-color: var(--bg-muted-dark);
   border-bottom-color: var(--border-dark);
+}
+
+/* 筛选器按钮样式 - 和header一样的hover效果 */
+.project-tab {
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.project-tab:hover {
+  background-color: rgba(0,0,0,0.06);
+  text-decoration: none;
+}
+
+html[data-color-mode="dark"] .project-tab:hover {
+  background-color: rgba(255,255,255,0.06);
 }
 @media (min-width: 769px) {
   .card-like {
