@@ -7,9 +7,9 @@ Unified card (GitHub-like): fixed header/body/meta rows, TAG on header right.
 {%- assign tag = 'TAG' -%}
 {%- if t == 'project' -%}
   {%- if it.type == 'pico8' -%}{% assign icon = '💠' %}{% assign tag = 'PICO-8' %}
-  {%- elsif it.type == 'models' -%}{% assign icon = '🛠' %}{% assign tag = 'MODELS' %}
+  {%- elsif it.type == 'models' -%}{% assign icon = '📦' %}{% assign tag = 'MODELS' %}
   {%- elsif it.type == 'pixel' -%}{% assign icon = '🖼' %}{% assign tag = 'PIXELART' %}
-  {%- elsif it.type == 'eng' -%}{% assign icon = '⚙' %}{% assign tag = 'ENG' %}
+  {%- elsif it.type == 'eng' -%}{% assign icon = '🛠' %}{% assign tag = 'ENG' %}
   {%- endif -%}
 {%- elsif t == 'post' -%}
   {% assign icon = '📝' %}{% assign tag = 'BLOG' %}
