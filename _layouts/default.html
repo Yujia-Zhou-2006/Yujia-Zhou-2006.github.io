@@ -8,9 +8,9 @@
   <link rel="stylesheet" href="{{ '/assets/styles/theme-tokens.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/styles/responsive.css' | relative_url }}">
 </head>
-<body>
+<body class="d-flex flex-column" style="min-height: 100vh;">
   {% include header.html %}
-  <main class="container-xl px-3 my-4 my-md-6">
+  <main class="container-xl px-3 my-4 my-md-6 flex-grow-1">
     {{ content }}
   </main>
   {% include footer.html %}

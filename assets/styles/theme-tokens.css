@@ -96,19 +96,20 @@ html[data-color-mode="dark"] .card-tag {
   /* 保证meta始终在卡片底部 */
 }
 .site-footer { 
-  padding-top: 1rem; 
-  padding-bottom: 1rem; 
   font-size: 12px;
-  position: sticky;
-  bottom: 0;
   background-color: var(--bg-muted-light);
   border-top: 1px solid var(--border-light);
-  z-index: 100;
+  flex-shrink: 0;
 }
 
 .sidebar-divider { 
   border: none; 
   border-top: 1px solid var(--border-light); 
+}
+
+html[data-color-mode="dark"] .site-footer {
+  background-color: var(--bg-muted-dark);
+  border-top-color: var(--border-dark);
 }
 
 html[data-color-mode="dark"] .sidebar-divider { 
@@ -151,19 +152,24 @@ html[data-color-mode="dark"] header.width-full {
 }
 
 /* 筛选器按钮样式 - 和header一样的hover效果 */
-.project-tab {
-  padding: 4px 8px;
+.UnderlineNav-item.project-tab {
+  padding: 4px 8px !important;
   border-radius: 6px;
   transition: background-color 0.2s;
 }
 
-.project-tab:hover {
-  background-color: rgba(0,0,0,0.06);
-  text-decoration: none;
+.UnderlineNav-item.project-tab:hover {
+  background-color: rgba(0,0,0,0.06) !important;
+  text-decoration: none !important;
 }
 
-html[data-color-mode="dark"] .project-tab:hover {
-  background-color: rgba(255,255,255,0.06);
+html[data-color-mode="dark"] .UnderlineNav-item.project-tab:hover {
+  background-color: rgba(255,255,255,0.06) !important;
+}
+
+/* 筛选器居中 */
+.UnderlineNav .UnderlineNav-body {
+  justify-content: center !important;
 }
 @media (min-width: 769px) {
   .card-like {

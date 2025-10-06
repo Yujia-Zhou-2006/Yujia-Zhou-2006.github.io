@@ -1,3 +1,13 @@
+/* 基础布局 */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  min-height: 100vh;
+}
+
 /* Footer样式 */
 .site-footer {
   color: var(--border-light);
@@ -15,7 +25,8 @@
 }
 
 html[data-color-mode="dark"] .site-footer {
-  color: var(--border-dark);
+  background-color: var(--bg-muted-dark);
+  border-top-color: var(--border-dark);
 }
 :root {
   --bg-default-light: #ffffff;
@@ -85,14 +96,20 @@ html[data-color-mode="dark"] .card-tag {
   /* 保证meta始终在卡片底部 */
 }
 .site-footer { 
-  padding-top: 1rem; 
-  padding-bottom: 1rem; 
-  font-size: 0.95rem; 
+  font-size: 12px;
+  background-color: var(--bg-muted-light);
+  border-top: 1px solid var(--border-light);
+  flex-shrink: 0;
 }
 
 .sidebar-divider { 
   border: none; 
   border-top: 1px solid var(--border-light); 
+}
+
+html[data-color-mode="dark"] .site-footer {
+  background-color: var(--bg-muted-dark);
+  border-top-color: var(--border-dark);
 }
 
 html[data-color-mode="dark"] .sidebar-divider { 
@@ -132,6 +149,27 @@ html[data-color-mode="dark"] .header-nav a.Link--primary:hover {
 html[data-color-mode="dark"] header.width-full {
   background-color: var(--bg-muted-dark);
   border-bottom-color: var(--border-dark);
+}
+
+/* 筛选器按钮样式 - 和header一样的hover效果 */
+.UnderlineNav-item.project-tab {
+  padding: 4px 8px !important;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.UnderlineNav-item.project-tab:hover {
+  background-color: rgba(0,0,0,0.06) !important;
+  text-decoration: none !important;
+}
+
+html[data-color-mode="dark"] .UnderlineNav-item.project-tab:hover {
+  background-color: rgba(255,255,255,0.06) !important;
+}
+
+/* 筛选器居中 */
+.UnderlineNav .UnderlineNav-body {
+  justify-content: center !important;
 }
 @media (min-width: 769px) {
   .card-like {
