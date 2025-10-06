@@ -1,36 +1,52 @@
 ---
 layout: default
 ---
-<div class="d-flex flex-column flex-md-row gap-4">
-  <aside class="col-12 col-md-4" id="about">
-    <div class="card-like p-3">
+<div class="container-xl px-3 px-md-4 px-lg-5">
+<div class="gutter-lg-condensed gutter-md-condensed gutter-condensed d-flex flex-column flex-md-row">
+  <aside class="profile-section flex-shrink-0 mr-md-4" style="width: 294px; max-width: 100%; margin-top: 2rem;">
+    <div class="">
       <div class="mb-3">
-        <div class="CircleBadge CircleBadge--large mb-2" style="background:#ddd;"></div>
+        <div class="d-flex flex-column flex-md-column">
+          <div class="profile-info">
+            <div class="d-flex flex-column flex-sm-row align-items-start gap-3">
+              <div class="profile-avatar-container">
+                <img src="{{ '/assets/avatar.jpg' | relative_url }}" alt="avatar" class="CircleBadge profile-avatar mb-4 mb-sm-0" style="width: 294px; height: 294px; object-fit: cover; background: #ddd;" />
+              </div>
+              <div class="profile-text">
+                <h2 class="h2 mb-2 name-responsive">{{ site.profile.name }}</h2>
+                <p class="text-gray mb-3">{{ site.profile.bio }}</p>
+              </div>
+            </div>
+            <hr class="my-3 sidebar-divider">
+          </div>
+          <div class="about-content">
+            <h2 class="h4">About</h2>
+            <ul class="list-style-none p-0 m-0 profile-list">
+              <li><strong>Name:</strong> {{ site.profile.name }}</li>
+              <li><strong>Birthday:</strong> {{ site.profile.birthday }}</li>
+              <li><strong>Location:</strong> {{ site.profile.location }}</li>
+              <li><strong>School:</strong> {{ site.profile.school }}</li>
+              <li><strong>Hobbies:</strong> {{ site.profile.hobbies }}</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <h2 class="h4">About</h2>
-      <ul class="list-style-none p-0 m-0 profile-list">
-        <li><strong>Name:</strong> Yujia Zhou</li>
-        <li><strong>Birthday:</strong> TBD</li>
-        <li><strong>Location:</strong> TBD</li>
-        <li><strong>School:</strong> TBD</li>
-        <li><strong>Hobbies:</strong> TBD</li>
-      </ul>
     </div>
   </aside>
 
-  <section class="col-12 col-md-8">
+  <section class="flex-grow-1" style="min-width: 0; width: 100%;">
     <header class="mb-4">
       <h1 class="f2-light m-0">{{ site.tagline }}</h1>
     </header>
 
     <section class="mb-5">
-      <h2 class="h4 mb-3">Popular</h2>
-      <div class="grid gutter-condensed">
+  <h2 class="h4 mb-3">Pined</h2>
+      <div class="d-flex flex-wrap gutter-condensed">
         {% assign pinned = site.pinned_projects %}
         {% for slug in pinned %}
           {% for prj in site.projects %}
             {% if prj.slug == slug %}
-              <div class="col-12 col-md-6 mb-3">
+              <div class="col-12 col-sm-6 mb-3" style="max-width: 50%;">
                 {% include card.html item=prj type='project' %}
               </div>
             {% endif %}
@@ -41,9 +57,10 @@ layout: default
 
     <section>
       <h2 class="h4 mb-3">Latest Blog</h2>
-      <div class="grid gutter-condensed">
-        {% for post in site.posts limit:3 %}
-          <div class="col-12 col-md-6 mb-3">
+      <div class="d-flex flex-wrap gutter-condensed">
+        {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
+        {% for post in sorted_posts limit:4 %}
+          <div class="col-12 col-sm-6 mb-3" style="max-width: 50%;">
             {% include card.html item=post type='post' %}
           </div>
         {% endfor %}

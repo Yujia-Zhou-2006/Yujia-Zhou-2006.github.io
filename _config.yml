@@ -32,3 +32,11 @@ collections:
     permalink: /projects/:slug/
 
 permalink: /blog/:year/:month/:day/:title/
+
+profile:
+  name: "Yujia Zhou"
+  birthday: "2006/09/04"
+  location: "USA PA Harrisburg "
+  school: "PSU Harrisburg"
+  hobbies: "Modeling,Pixel art"
+  bio: "A passionate developer and digital artist, exploring the intersection of technology and creativity."

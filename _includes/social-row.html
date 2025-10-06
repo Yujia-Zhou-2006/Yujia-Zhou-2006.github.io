@@ -2,19 +2,20 @@
   {% assign order = site.social_order %}
   {% for key in order %}
     {% if key == 'github' %}
-      <a href="{{ site.social.github }}" class="Link--secondary"><span class="inline-icon"></span> GitHub</a>
+      <a href="{{ site.social.github }}" class="Link--secondary mx-2">GitHub</a>
     {% elsif key == 'email' %}
-      <a href="{{ site.social.email }}" class="Link--secondary"><span class="inline-icon">✉</span> Email</a>
+      <a href="{{ site.social.email }}" class="Link--secondary mx-2">Email</a>
     {% elsif key == 'wechat' %}
-      <button class="btn btn-sm" data-action="copy-wechat" data-id="{{ site.social.wechat_id }}"><span class="inline-icon">💬</span> WeChat ⧉</button>
+        <button class="btn btn-sm mx-2 footer-btn" data-action="copy-wechat" data-id="{{ site.social.wechat_id }}" id="wechat-btn">WeChat</button>
+        <div id="wechat-copied" style="display:none; font-size:0.95rem; font-weight:bold; color:#111; position:absolute; left:50%; transform:translateX(-50%); margin-top:-2.2rem; background:rgba(255,255,255,0.95); padding:2px 10px; border-radius:6px; z-index:10;">Copied</div>
     {% elsif key == 'instagram' %}
-      <a href="{{ site.social.instagram }}" class="Link--secondary"><span class="inline-icon">📷</span> Instagram</a>
+      <a href="{{ site.social.instagram }}" class="Link--secondary mx-2">Instagram</a>
     {% elsif key == 'red' %}
-      <a href="{{ site.social.red }}" class="Link--secondary"><span class="inline-icon">🗒</span> RED</a>
+      <a href="{{ site.social.red }}" class="Link--secondary mx-2">RED</a>
     {% elsif key == 'itch' %}
-      <a href="{{ site.social.itch }}" class="Link--secondary"><span class="inline-icon">🚀</span> itch.io</a>
+      <a href="{{ site.social.itch }}" class="Link--secondary mx-2">itch.io</a>
     {% elsif key == 'pixilart' %}
-      <a href="{{ site.social.pixilart }}" class="Link--secondary"><span class="inline-icon">🖼</span> Pixilart</a>
+      <a href="{{ site.social.pixilart }}" class="Link--secondary mx-2">Pixilart</a>
     {% endif %}
   {% endfor %}
   <div id="toast" hidden class="position-fixed right-3 top-3 p-2 px-3 color-bg-subtle color-fg-default rounded-2 border">Copied</div>

@@ -8,28 +8,30 @@ Unified card (GitHub-like): fixed header/body/meta rows, TAG on header right.
 {%- if t == 'project' -%}
   {%- if it.type == 'pico8' -%}{% assign icon = '💠' %}{% assign tag = 'PICO-8' %}
   {%- elsif it.type == 'models' -%}{% assign icon = '🛠' %}{% assign tag = 'MODELS' %}
-  {%- elsif it.type == 'pixel' -%}{% assign icon = '🖼' %}{% assign tag = 'PIXEL' %}
+  {%- elsif it.type == 'pixel' -%}{% assign icon = '🖼' %}{% assign tag = 'PIXELART' %}
   {%- elsif it.type == 'eng' -%}{% assign icon = '⚙' %}{% assign tag = 'ENG' %}
   {%- endif -%}
 {%- elsif t == 'post' -%}
   {% assign icon = '📝' %}{% assign tag = 'BLOG' %}
 {%- endif -%}
 <a class="card-like linked d-block p-3 color-fg-default no-underline" href="{{ it.url | relative_url }}">
-  <div class="d-flex flex-justify-between mb-2">
-    <div class="card-title h5 m-0">
-      <span class="inline-icon">{{ icon }}</span>
-      {{ it.title }}
+  <div class="card-body" style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0;">
+    <div class="d-flex flex-justify-between mb-2">
+      <div class="card-title h5 m-0">
+        <span class="inline-icon">{{ icon }}</span>
+        {{ it.title }}
+      </div>
+      <div class="card-tag text-small">{{ tag }}</div>
     </div>
-    <div class="card-tag text-small">{{ tag }}</div>
+    <div class="card-desc">
+      {{ it.summary | default: it.subtitle | default: "TBD." }}
+    </div>
   </div>
-  <div class="card-desc mb-2">
-    {{ it.summary | default: it.subtitle | default: "TBD." }}
-  </div>
-  <div class="d-flex flex-justify-between meta-muted text-small">
+  <div class="d-flex flex-justify-between meta-muted text-small card-meta-bottom">
     <div>
-      {%- if t == 'project' -%}
-        {{ it.type | upcase }}{% if it.year %} • {{ it.year }}{% endif %}
-      {%- else -%}
+      {%- if t == 'project' and it.year -%}
+        {{ it.year }}
+      {%- elsif t == 'post' -%}
         {{ it.date | date: "%Y-%m-%d" }}
       {%- endif -%}
     </div>

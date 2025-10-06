@@ -1,14 +1,17 @@
 ---
 layout: default
 ---
-<header class="mb-4">
-  <h1 class="f2-light">Blog</h1>
-</header>
-
-<div class="grid gutter-condensed">
-  {% for post in site.posts %}
-    <div class="col-12 col-md-6 col-lg-4 mb-3">
-      {% include card.html item=post type='post' %}
+<div class="container-xl px-3 px-md-4 px-lg-5">
+  <header class="mb-4 text-center">
+    <h1 class="f2-light">Blog</h1>
+  </header>
+  <div class="d-flex flex-column align-items-center">
+    <div class="grid gutter-condensed d-flex flex-wrap justify-content-center" style="max-width:1200px;">
+      {% for post in site.posts %}
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          {% include card.html item=post type='post' %}
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
+  </div>
 </div>

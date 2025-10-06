@@ -1,25 +1,21 @@
 ---
 layout: default
 ---
-<header class="mb-4">
-  <h1 class="f2-light">Projects</h1>
-</header>
-
-{% include tabs.html %}
-
-<div class="grid gutter-condensed mt-3">
-  {%- assign selected = page.filter | default: 'all' -%}
-  {%- assign items = site.projects -%}
-  {%- if selected != 'all' -%}
-    {%- assign items = items | where: 'type', selected -%}
-  {%- endif -%}
-  {%- assign pinned = items | where: 'pinned', true -%}
-  {%- assign rest = items | where_exp: "it", "it.pinned != true" -%}
-  {%- assign rest = rest | sort: 'year' | reverse -%}
-  {%- for prj in pinned -%}
-    <div class="col-12 col-md-6 col-lg-4 mb-3">{% include card.html item=prj type='project' %}</div>
-  {%- endfor -%}
-  {%- for prj in rest -%}
-    <div class="col-12 col-md-6 col-lg-4 mb-3">{% include card.html item=prj type='project' %}</div>
-  {%- endfor -%}
+<div class="container-xl px-3 px-md-4 px-lg-5">
+  <header class="mb-4 text-center">
+    <h1 class="f2-light">Projects</h1>
+  </header>
+  <div class="d-flex flex-column align-items-center">
+    {% include tabs.html %}
+    <div class="grid gutter-condensed mt-3 d-flex flex-wrap justify-content-center" style="max-width:1200px;">
+      {%- assign items = site.projects | sort: 'year' | reverse -%}
+      {%- for prj in items -%}
+        <div class="col-12 col-md-6 col-lg-4 mb-3 project-card" data-type="{{ prj.type }}">
+          {% include card.html item=prj type='project' %}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
 </div>
+
+<script src="{{ '/assets/scripts/project-filter.js' | relative_url }}"></script>

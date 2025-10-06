@@ -1,6 +1,5 @@
 <div class="UnderlineNav">
   <nav class="UnderlineNav-body">
-    {% assign current = page.filter | default: 'all' %}
     {% assign tabs = "all|pico8|models|pixel|eng" | split: "|" %}
     {% for t in tabs %}
       {% assign label = t %}
@@ -10,7 +9,7 @@
       {% elsif t == 'pixel' %}{% assign label = 'Pixel Art' %}
       {% elsif t == 'eng' %}{% assign label = 'Engineering' %}
       {% endif %}
-      <a class="UnderlineNav-item {% if current == t %}selected{% endif %}" href="?type={{ t }}">{{ label }}</a>
+      <a class="UnderlineNav-item project-tab{% if forloop.first %} selected{% endif %}" href="#" data-type="{{ t }}">{{ label }}</a>
     {% endfor %}
   </nav>
 </div>
