@@ -1,3 +1,148 @@
+@media (min-width: 577px) {
+  .site-title-logo {
+    transform: translateX(0.5rem);
+  }
+}
+/* Desktop theme toggle button hover effect */
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4em;
+  height: 2.4em;
+  min-width: 2.4em;
+  min-height: 2.4em;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-left: 0.5em;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  font-size: 1em;
+}
+.theme-toggle-btn:hover, .theme-toggle-btn:focus {
+  background: rgba(0,0,0,0.06);
+  color: inherit;
+  box-shadow: none;
+}
+html[data-color-mode="dark"] .theme-toggle-btn:hover, html[data-color-mode="dark"] .theme-toggle-btn:focus {
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  box-shadow: none;
+}
+/* Floating theme toggle button for mobile */
+.theme-fab {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 9999;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--bg-muted-light);
+  color: var(--fg-default-light);
+  border: 1.5px solid var(--border-light);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  transition: background 0.2s, color 0.2s;
+}
+html[data-color-mode="dark"] .theme-fab {
+  background: var(--bg-muted-dark);
+  color: var(--fg-default-dark);
+  border: 1.5px solid var(--border-dark);
+}
+@media (min-width: 577px) {
+  .theme-fab { display: none !important; }
+}
+/* Home page: one card per row on mobile */
+.home-card-col { max-width: 50%; }
+@media (max-width: 576px) {
+  .home-card-col { max-width: 100% !important; flex: 0 0 100% !important; }
+}
+
+/* Center theme button in mobile header */
+.d-only-mobile .header-nav {
+  justify-content: center !important;
+}
+.d-only-mobile .d-flex.flex-justify-between.flex-items-center {
+  justify-content: center !important;
+  gap: 1rem;
+}
+.d-only-mobile .btn[data-action="toggle-theme"] {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Responsive header: two rows on mobile, horizontal on desktop */
+.site-header-responsive .header-row {
+  width: 100%;
+  box-sizing: border-box;
+}
+.site-header-responsive .header-row-top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.25rem;
+}
+.site-header-responsive .header-title-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.site-header-responsive .header-row-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 0;
+  padding-bottom: 0.25rem;
+}
+@media (max-width: 576px) {
+  .site-header-responsive .header-row-top {
+    padding-bottom: 0.25rem;
+  }
+  .site-header-responsive .header-row-nav {
+    padding-top: 0;
+    padding-bottom: 0.25rem;
+  }
+  .site-header-responsive .header-title-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-header-responsive .header-nav {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: flex-start;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .site-header-responsive .site-title {
+    font-size: 1.1rem;
+    margin-left: 0;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Utility: show/hide for mobile/desktop header */
+.d-none-mobile { display: block; }
+.d-only-mobile { display: none; }
+@media (max-width: 576px) {
+  .d-none-mobile { display: none !important; }
+  .d-only-mobile { display: block !important; }
+}
 /* 基础布局 - Sticky Footer */
 html, body {
   height: 100%;
@@ -138,6 +283,15 @@ header.width-full {
 
 .header-nav {
   gap: 1.5rem;
+}
+@media (min-width: 577px) {
+  .header-nav {
+    transform: translateX(-2rem);
+  }
+}
+}
+.theme-toggle-btn {
+  margin-left: 0;
 }
 
 .header-nav a.Link--primary {
