@@ -20,20 +20,22 @@ All pages are static and deployed automatically by **GitHub Pages**.
 ---
 
 ## 🏗️ Structure
+
+```text
 Yujia-Zhou-2006.github.io/
 │
-├── _config.yml # Global configuration (title, socials, pinned projects)
-├── _projects/ # Project entries (.md, each with front matter)
-├── _posts/ # Blog posts (standard Jekyll post format)
-├── _layouts/ # Page templates (home, project, post, etc.)
-├── _includes/ # Shared partials (header, footer, card, etc.)
+├── _config.yml              # Global configuration (title, socials, pinned projects)
+├── _projects/               # Project entries (.md, each with front matter)
+├── _posts/                  # Blog posts (standard Jekyll post format)
+├── _layouts/                # Page templates (home, project, post, etc.)
+├── _includes/               # Shared partials (header, footer, card, etc.)
 ├── assets/
-│ ├── images/ # Avatars and project images
-│ ├── styles/ # Custom CSS (theme-tokens.css)
-│ └── scripts/ # JS (theme toggle, copy wechat)
-└── pages/ # Stand-alone pages (Projects / Blog / Contact)
+│   ├── images/              # Avatars and project images
+│   ├── styles/              # Custom CSS (theme-tokens.css)
+│   └── scripts/             # JS (theme toggle, copy wechat)
+└── pages/                   # Stand-alone pages (Projects / Blog / Contact)
 
-
+```
 ---
 
 ## 🎨 Design
