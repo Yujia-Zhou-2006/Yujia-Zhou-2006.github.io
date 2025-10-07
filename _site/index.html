@@ -8,18 +8,38 @@
   <link rel="stylesheet" href="/assets/styles/theme-tokens.css">
 </head>
 <body>
-  <header class="width-full color-shadow-small">
+  
+<header class="width-full color-shadow-small d-none-mobile">
   <div class="container-xl px-2 py-2 d-flex flex-justify-between flex-items-center">
-  <a href="/" class="h4 no-underline color-fg-default" style="margin-left: 1.5rem">Yujia-site</a>
-  <nav class="d-flex flex-items-center header-nav">
-    <a class="Link--primary" href="/">Home</a>
-    <a class="Link--primary" href="/pages/projects/">Projects</a>
-    <a class="Link--primary" href="/pages/blog/">Blog</a>
-    <a class="Link--primary" href="/pages/about/">About Site</a>
-    <button class="btn btn-invisible" data-action="toggle-theme" aria-label="Theme toggle">◎</button>
-  </nav>
+  <a href="/" class="h4 no-underline color-fg-default site-title-logo" style="margin-left: 1.5rem">Yujia-site</a>
+    <nav class="d-flex flex-items-center header-nav">
+      <a class="Link--primary" href="/">Home</a>
+      <a class="Link--primary" href="/pages/projects/">Projects</a>
+      <a class="Link--primary" href="/pages/blog/">Blog</a>
+      <a class="Link--primary" href="/pages/about/">About Site</a>
+  <button class="btn btn-invisible theme-toggle-btn" data-action="toggle-theme" aria-label="Theme toggle"></button>
+    </nav>
   </div>
 </header>
+
+<!-- Mobile Header (only visible on mobile) -->
+<header class="width-full color-shadow-small d-only-mobile">
+  <div class="container-xl px-2 py-2 d-flex flex-justify-between flex-items-center">
+    <a href="/" class="h4 no-underline color-fg-default">Yujia-site</a>
+  </div>
+  <div class="container-xl px-2 py-1">
+    <nav class="d-flex flex-items-center header-nav">
+      <a class="Link--primary" href="/">Home</a>
+      <a class="Link--primary" href="/pages/projects/">Projects</a>
+      <a class="Link--primary" href="/pages/blog/">Blog</a>
+      <a class="Link--primary" href="/pages/about/">About Site</a>
+    </nav>
+  </div>
+<!-- End mobile header -->
+</header>
+
+<!-- Floating theme toggle for mobile -->
+<button class="theme-fab d-only-mobile" data-action="toggle-theme" aria-label="Theme toggle"></button>
 
   <main class="container-xl px-3 my-4 my-md-6">
     <div class="container-xl px-3 px-md-4 px-lg-5">
@@ -62,12 +82,12 @@
 
     <section class="mb-5">
   <h2 class="h4 mb-3">Pined</h2>
-      <div class="d-flex flex-wrap gutter-condensed">
+      <div class="d-flex flex-wrap gutter-condensed home-card-row">
         
         
           
             
-              <div class="col-12 col-sm-6 mb-3" style="max-width: 50%;">
+              <div class="col-12 col-sm-6 mb-3 home-card-col">
                 <a class="card-like linked d-block p-3 color-fg-default no-underline" href="/projects/bf-109-f4-models/">
   <div class="card-body" style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0;">
     <div class="d-flex flex-justify-between mb-2">
@@ -111,7 +131,7 @@
             
           
             
-              <div class="col-12 col-sm-6 mb-3" style="max-width: 50%;">
+              <div class="col-12 col-sm-6 mb-3 home-card-col">
                 <a class="card-like linked d-block p-3 color-fg-default no-underline" href="/projects/p51-c-models/">
   <div class="card-body" style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0;">
     <div class="d-flex flex-justify-between mb-2">
@@ -145,7 +165,7 @@
             
           
             
-              <div class="col-12 col-sm-6 mb-3" style="max-width: 50%;">
+              <div class="col-12 col-sm-6 mb-3 home-card-col">
                 <a class="card-like linked d-block p-3 color-fg-default no-underline" href="/projects/night-impression-pixel/">
   <div class="card-body" style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0;">
     <div class="d-flex flex-justify-between mb-2">
@@ -185,7 +205,7 @@
             
           
             
-              <div class="col-12 col-sm-6 mb-3" style="max-width: 50%;">
+              <div class="col-12 col-sm-6 mb-3 home-card-col">
                 <a class="card-like linked d-block p-3 color-fg-default no-underline" href="/projects/nonlinear-sprite-motion-pico8/">
   <div class="card-body" style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0;">
     <div class="d-flex flex-justify-between mb-2">
@@ -222,10 +242,10 @@
 
     <section>
       <h2 class="h4 mb-3">Latest Blog</h2>
-      <div class="d-flex flex-wrap gutter-condensed">
+      <div class="d-flex flex-wrap gutter-condensed home-card-row">
         
         
-          <div class="col-12 col-sm-6 mb-3" style="max-width: 50%;">
+          <div class="col-12 col-sm-6 mb-3 home-card-col">
             <a class="card-like linked d-block p-3 color-fg-default no-underline" href="/blog/2025/10/06/blog-placeholder-3/">
   <div class="card-body" style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0;">
     <div class="d-flex flex-justify-between mb-2">
@@ -247,7 +267,7 @@
 
           </div>
         
-          <div class="col-12 col-sm-6 mb-3" style="max-width: 50%;">
+          <div class="col-12 col-sm-6 mb-3 home-card-col">
             <a class="card-like linked d-block p-3 color-fg-default no-underline" href="/blog/2025/10/06/blog-placeholder-2/">
   <div class="card-body" style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0;">
     <div class="d-flex flex-justify-between mb-2">
@@ -269,7 +289,7 @@
 
           </div>
         
-          <div class="col-12 col-sm-6 mb-3" style="max-width: 50%;">
+          <div class="col-12 col-sm-6 mb-3 home-card-col">
             <a class="card-like linked d-block p-3 color-fg-default no-underline" href="/blog/2025/10/06/blog-placeholder-1/">
   <div class="card-body" style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0;">
     <div class="d-flex flex-justify-between mb-2">
@@ -291,7 +311,7 @@
 
           </div>
         
-          <div class="col-12 col-sm-6 mb-3" style="max-width: 50%;">
+          <div class="col-12 col-sm-6 mb-3 home-card-col">
             <a class="card-like linked d-block p-3 color-fg-default no-underline" href="/blog/2025/10/05/dev-log-template/">
   <div class="card-body" style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0;">
     <div class="d-flex flex-justify-between mb-2">

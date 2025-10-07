@@ -1,12 +1,32 @@
-<header class="width-full color-shadow-small">
+
+<header class="width-full color-shadow-small d-none-mobile">
   <div class="container-xl px-2 py-2 d-flex flex-justify-between flex-items-center">
-  <a href="{{ '/' | relative_url }}" class="h4 no-underline color-fg-default" style="margin-left: 1.5rem">Yujia-site</a>
-  <nav class="d-flex flex-items-center header-nav">
-    <a class="Link--primary" href="{{ '/' | relative_url }}">Home</a>
-    <a class="Link--primary" href="{{ '/pages/projects/' | relative_url }}">Projects</a>
-    <a class="Link--primary" href="{{ '/pages/blog/' | relative_url }}">Blog</a>
-    <a class="Link--primary" href="{{ '/pages/about/' | relative_url }}">About Site</a>
-    <button class="btn btn-invisible" data-action="toggle-theme" aria-label="Theme toggle">◎</button>
-  </nav>
+  <a href="{{ '/' | relative_url }}" class="h4 no-underline color-fg-default site-title-logo" style="margin-left: 1.5rem">Yujia-site</a>
+    <nav class="d-flex flex-items-center header-nav">
+      <a class="Link--primary" href="{{ '/' | relative_url }}">Home</a>
+      <a class="Link--primary" href="{{ '/pages/projects/' | relative_url }}">Projects</a>
+      <a class="Link--primary" href="{{ '/pages/blog/' | relative_url }}">Blog</a>
+      <a class="Link--primary" href="{{ '/pages/about/' | relative_url }}">About Site</a>
+  <button class="btn btn-invisible theme-toggle-btn" data-action="toggle-theme" aria-label="Theme toggle"></button>
+    </nav>
   </div>
 </header>
+
+<!-- Mobile Header (only visible on mobile) -->
+<header class="width-full color-shadow-small d-only-mobile">
+  <div class="container-xl px-2 py-2 d-flex flex-justify-between flex-items-center">
+    <a href="{{ '/' | relative_url }}" class="h4 no-underline color-fg-default">Yujia-site</a>
+  </div>
+  <div class="container-xl px-2 py-1">
+    <nav class="d-flex flex-items-center header-nav">
+      <a class="Link--primary" href="{{ '/' | relative_url }}">Home</a>
+      <a class="Link--primary" href="{{ '/pages/projects/' | relative_url }}">Projects</a>
+      <a class="Link--primary" href="{{ '/pages/blog/' | relative_url }}">Blog</a>
+      <a class="Link--primary" href="{{ '/pages/about/' | relative_url }}">About Site</a>
+    </nav>
+  </div>
+<!-- End mobile header -->
+</header>
+
+<!-- Floating theme toggle for mobile -->
+<button class="theme-fab d-only-mobile" data-action="toggle-theme" aria-label="Theme toggle"></button>
