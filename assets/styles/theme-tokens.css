@@ -1,9 +1,94 @@
+/* 规范化并独立 theme-fab-fix 样式，避免与原有 theme-fab 冲突 */
+.theme-fab-fix {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 9999;
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  background: var(--bg-muted-light);
+  color: var(--fg-default-light);
+  border: 1.5px solid var(--border-light);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: background 0.2s, color 0.2s, transform 0.32s cubic-bezier(.4,0,.2,1), opacity 0.22s !important;
+  will-change: transform, opacity;
+  /* 强制优先级，防止被其它规则覆盖 */
+  /* transform 和 opacity 的 !important 由 JS 动态 style 设置覆盖 */
+}
+html[data-color-mode="dark"] .theme-fab-fix {
+  background: var(--bg-muted-dark);
+  color: var(--fg-default-dark);
+  border: 1.5px solid var(--border-dark);
+}
+@media (min-width: 577px) {
+  .theme-fab-fix { display: none !important; }
+}
+@media (max-width: 767.98px) {
+  .site-footer .container-xl {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  .site-footer p {
+    margin-bottom: 0.25rem !important;
+    text-align: center !important;
+    width: 100%;
+  }
+  .site-footer .social-row {
+    justify-content: center !important;
+    width: 100%;
+  }
+}
+/* 修正主页卡片在手机端的宽度和排列，彻底覆盖 col-12/col-sm-6 的影响 */
+@media (max-width: 767.98px) {
+  /* 个人信息区和分隔线右侧留白 */
+  .sidebar-divider {
+    padding-right: 0rem !important;
+  }
+  .profile-info {
+    padding-right: 1rem !important;
+  }
+  .profile-text {
+    padding-right: 0rem !important;
+  }
+  /* 主页主内容区左右留白，防止卡片贴边 */
+  .flex-grow-1 {
+    padding-left: 0rem !important;
+    padding-right: 1rem !important;
+  }
+  .home-card-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .home-card-row > .home-card-col {
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
 @media (min-width: 577px) {
   .site-title-logo {
     transform: translateX(0.5rem);
   }
 }
 /* Desktop theme toggle button hover effect */
+/* theme-toggle-btn 样式 */
 .theme-toggle-btn {
   display: flex;
   align-items: center;
@@ -21,6 +106,19 @@
   margin-left: 0.5em;
   transition: background 0.18s, color 0.18s, box-shadow 0.18s;
   font-size: 1em;
+}
+
+@media (max-width: 767.98px) {
+  .theme-fab {
+    transition: transform 0.32s cubic-bezier(.4,0,.2,1), opacity 0.22s;
+    will-change: transform, opacity;
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+    right: 1rem;
+    bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  }
 }
 .theme-toggle-btn:hover, .theme-toggle-btn:focus {
   background: rgba(0,0,0,0.06);
@@ -61,8 +159,35 @@ html[data-color-mode="dark"] .theme-fab {
 }
 /* Home page: one card per row on mobile */
 .home-card-col { max-width: 50%; }
-@media (max-width: 576px) {
+@media (max-width: 767.98px) {
   .home-card-col { max-width: 100% !important; flex: 0 0 100% !important; }
+  .profile-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    margin-top: 1rem !important;
+  }
+  .gutter-lg-condensed, .gutter-md-condensed, .gutter-condensed {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .container-xl {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    box-sizing: border-box;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  body, html {
+    overflow-x: hidden !important;
+  }
+  .flex-md-row {
+    flex-direction: column !important;
+  }
 }
 
 /* Center theme button in mobile header */
@@ -136,10 +261,10 @@ html[data-color-mode="dark"] .theme-fab {
   }
 }
 
-/* Utility: show/hide for mobile/desktop header */
+/* Utility: show/hide for mobile/desktop header (统一断点为767.98px) */
 .d-none-mobile { display: block; }
 .d-only-mobile { display: none; }
-@media (max-width: 576px) {
+@media (max-width: 767.98px) {
   .d-none-mobile { display: none !important; }
   .d-only-mobile { display: block !important; }
 }
@@ -289,7 +414,7 @@ header.width-full {
     transform: translateX(-2rem);
   }
 }
-}
+
 .theme-toggle-btn {
   margin-left: 0;
 }
