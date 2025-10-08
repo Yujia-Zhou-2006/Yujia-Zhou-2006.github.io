@@ -150,11 +150,8 @@ html[data-color-mode="dark"] .theme-fab {
     box-sizing: border-box;
     width: 100vw !important;
     max-width: 100vw !important;
-    overflow-x: hidden !important;
   }
-  body, html {
-    overflow-x: hidden !important;
-  }
+  /* 移除body,html的overflow限制，让Safari正确检测滚动 */
   .flex-md-row {
     flex-direction: column !important;
   }
@@ -238,22 +235,29 @@ html[data-color-mode="dark"] .theme-fab {
   .d-none-mobile { display: none !important; }
   .d-only-mobile { display: block !important; }
 }
-/* 基础布局 - Sticky Footer */
-html, body {
+/* 基础布局 - 修复Safari滚动检测 */
+html {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+  margin: 0;
+  padding: 0;
   min-height: 100vh;
+  /* 确保Safari能检测到正常滚动 */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-/* main区域自动填充剩余空间 */
+/* main区域和footer重新布局 */
 main {
-  flex: 1 0 auto;
+  min-height: calc(100vh - 140px); /* 为header和footer预留空间 */
+}
+
+.site-footer {
+  margin-top: auto;
 }
 
 /* Footer样式 */
@@ -367,10 +371,85 @@ html[data-color-mode="dark"] .sidebar-divider {
 .profile-list li { margin:.25rem 0; line-height:1.35; }
 .inline-icon { vertical-align:text-bottom; }
 
-/* Header styles - 毛玻璃效果 */
+/* GitHub风格的滚动导航条（完全模仿Header第二行样式） */
+.scroll-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: rgba(246, 248, 250, 0.7);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
+  -webkit-backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+  display: none; /* 完全隐藏，不参与布局 */
+}
+
+.scroll-nav.scroll-nav-hidden {
+  transform: translateY(-100%);
+}
+
+html[data-color-mode="dark"] .scroll-nav {
+  background: rgba(13, 17, 22, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+}
+
+.scroll-nav-content {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.scroll-nav-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: inherit;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.scroll-nav nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.scroll-nav nav a {
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  color: inherit;
+  text-decoration: none;
+}
+
+.scroll-nav nav a:hover {
+  background-color: rgba(0,0,0,0.06);
+  text-decoration: none;
+}
+
+html[data-color-mode="dark"] .scroll-nav nav a:hover {
+  background-color: rgba(255,255,255,0.06);
+}
+
+/* 只在手机端显示 */
+@media (min-width: 768px) {
+  .scroll-nav {
+    display: none !important;
+  }
+}
+
 header.width-full {
   background: rgba(246, 248, 250, 0.7);
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  position: -webkit-sticky; /* Safari兼容 */
   position: sticky;
   top: 0;
   z-index: 100;
@@ -378,6 +457,38 @@ header.width-full {
   -webkit-backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
   /* Header渐变效果 */
   background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  /* 规避iOS Safari系统收缩 */
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* 手机端Header使用固定定位，完全规避系统收缩 */
+@media (max-width: 767.98px) {
+  header.width-full.d-only-mobile {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    /* 强制独立合成层 */
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+    will-change: transform;
+  }
+  
+  /* 为固定Header留出空间 */
+  main {
+    padding-top: 70px !important; /* 强制应用70px */
+  }
+  
+  /* 当第一行隐藏时，减少padding */
+  .header-title-hidden main {
+    padding-top: 50px !important; /* 强制应用50px */
+  }
 }
 
 /* 手机端Header第一行不使用毛玻璃 */
@@ -387,6 +498,46 @@ header.width-full {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background-image: none;
+    /* 移除左右padding，让背景撑满屏幕 */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    /* 滚动隐藏效果 */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  /* 恢复内容区域的padding */
+  header.width-full.d-only-mobile .container-xl:first-child > .d-flex {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  /* 为导航栏也添加过渡动画 */
+  header.width-full.d-only-mobile .container-xl:last-child {
+    transition: transform 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  /* 滚动时隐藏Header第一行（所有模式通用） */
+  .header-title-hidden header.width-full.d-only-mobile .container-xl:first-child {
+    transform: translateY(-100%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* 暗色模式下也要隐藏第一行 */
+  html[data-color-mode="dark"] .header-title-hidden header.width-full.d-only-mobile .container-xl:first-child {
+    transform: translateY(-100%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    background: var(--bg-muted-dark) !important;
+  }
+  
+  /* 调整Header第二行位置，当第一行隐藏时 */
+  .header-title-hidden header.width-full.d-only-mobile .container-xl:last-child {
+    margin-top: -2.5rem; /* 向上移动补偿第一行空间 */
   }
 }
 
@@ -431,6 +582,19 @@ html[data-color-mode="dark"] header.width-full {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background-image: none;
+    /* 移除左右padding，让背景撑满屏幕 */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    /* 滚动隐藏效果 */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  /* 恢复内容区域的padding */
+  html[data-color-mode="dark"] header.width-full.d-only-mobile .container-xl:first-child > .d-flex {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }
 
@@ -616,6 +780,7 @@ html[data-color-mode="dark"] .profile-avatar {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 1rem;
 }
 
 /* 响应式头像和布局 - 使用Bootstrap断点系统 */
@@ -628,6 +793,43 @@ html[data-color-mode="dark"] .profile-avatar {
   .profile-section {
     width: 100% !important;
     max-width: 100% !important;
+  }
+
+  /* 桌面端profile-section适当的顶部间距 */
+  @media (min-width: 768px) {
+    .profile-section {
+      margin-top: 0 !important; /* 重置margin */
+      padding-top: 0 !important; /* 重置padding */
+    }
+    
+    /* 重置gutter容器间距 */
+    .gutter-lg-condensed, .gutter-md-condensed, .gutter-condensed {
+      margin-top: 0 !important;
+    }
+    
+    /* 头像容器向下移动并修复高度对齐 - 使用更强的选择器 */
+    .profile-section .profile-avatar-container {
+      margin-top: 4rem !important; /* 增加到4rem，让整个容器下移更多 */
+      padding-bottom: 2rem !important; /* 头像容器下方加padding */
+      height: 294px !important; /* 明确设置容器高度与图片一致 */
+      display: flex !important;
+      align-items: flex-start !important; /* 对齐到容器顶部 */
+    }
+    
+    /* 也尝试更具体的选择器 */
+    .gutter-lg-condensed .profile-section .profile-avatar-container,
+    .gutter-md-condensed .profile-section .profile-avatar-container,
+    .gutter-condensed .profile-section .profile-avatar-container {
+      margin-top: 4rem !important;
+      padding-bottom: 2rem !important;
+    }
+    
+    /* 头像本身的定位，确保与容器对齐 */
+    .profile-avatar {
+      margin: 0 !important; /* 重置所有margin */
+      margin-bottom: 0 !important; /* 强制移除bottom margin */
+      display: block !important;
+    }
   }
 
   .profile-info {
@@ -662,7 +864,7 @@ html[data-color-mode="dark"] .profile-avatar {
 
 @media (min-width: 768px) {
   .profile-avatar {
-    margin-bottom: 2.2rem !important;
+    margin-bottom: 0 !important; /* 移除底部边距 */
   }
   
   .profile-info .d-flex {
