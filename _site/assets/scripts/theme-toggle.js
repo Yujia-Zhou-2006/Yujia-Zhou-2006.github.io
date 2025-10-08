@@ -30,7 +30,7 @@
     });
   }
   
-  // 智能隐藏悬浮按钮 - 修复版本
+  // 智能隐藏悬浮按钮和Header第一行
   function handleScroll() {
     if (!fab) {
       fab = document.querySelector('.theme-fab');
@@ -45,9 +45,11 @@
     
     const currentScrollY = scrollY1 || scrollY2 || scrollY3 || scrollY4 || 0;
     const scrollThreshold = 50;
+    const headerHideThreshold = 30; // Header第一行隐藏阈值
     
     console.log('Scroll values - window.scrollY:', scrollY1, 'pageYOffset:', scrollY2, 'docElement:', scrollY3, 'body:', scrollY4, 'final:', currentScrollY);
     
+    // 控制悬浮按钮
     if (currentScrollY < scrollThreshold) {
       fab.classList.remove('hidden');
       console.log('FAB shown - near top, scrollY =', currentScrollY);
@@ -57,6 +59,39 @@
     } else if (currentScrollY < lastScrollY - 10) {
       fab.classList.remove('hidden');
       console.log('FAB shown - scrolling up, scrollY =', currentScrollY);
+    }
+    
+    // 控制Header第一行隐藏（仅手机端，所有模式统一）
+    if (window.innerWidth <= 767) {
+      if (currentScrollY > headerHideThreshold) {
+        document.body.classList.add('header-title-hidden');
+        console.log('Header title hidden');
+      } else {
+        document.body.classList.remove('header-title-hidden');
+        console.log('Header title shown');
+      }
+    }
+    
+    // 控制GitHub风格的滚动导航条（仅手机端，默认显示，向下滚动隐藏）
+    const scrollNav = document.getElementById('scrollNav');
+    if (scrollNav && window.innerWidth <= 767) {
+      const hideThreshold = 150; // 滚动150px后才开始响应
+      
+      if (currentScrollY > hideThreshold) {
+        if (currentScrollY > lastScrollY + 10) {
+          // 向下滚动，隐藏导航条
+          scrollNav.classList.add('scroll-nav-hidden');
+          console.log('Scroll nav hidden - scrolling down');
+        } else if (currentScrollY < lastScrollY - 10) {
+          // 向上滚动，显示导航条
+          scrollNav.classList.remove('scroll-nav-hidden');
+          console.log('Scroll nav shown - scrolling up');
+        }
+      } else {
+        // 接近顶部，始终显示导航条
+        scrollNav.classList.remove('scroll-nav-hidden');
+        console.log('Scroll nav shown - near top');
+      }
     }
     
     lastScrollY = currentScrollY;
