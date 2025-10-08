@@ -1,32 +1,70 @@
 (function(){
   const KEY='colorMode';
   const html=document.documentElement;
+  const THEME_COLORS = { light: '#f6f8fa', dark: '#0d1116' };
   
   let lastScrollY = 0;
   let fab = null;
   
-  function getMode(){
-    const mode = localStorage.getItem(KEY) || 'auto';
-    if(mode==='light'||mode==='dark') return mode;
+  function resolveMode(preference) {
+    if(preference==='light' || preference==='dark') return preference;
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     return prefersDark ? 'dark' : 'light';
   }
   
-  function apply(mode){
-    if(mode==='light' || mode==='dark'){ html.setAttribute('data-color-mode', mode); }
-    else {
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      html.setAttribute('data-color-mode', prefersDark ? 'dark' : 'light');
-    }
-    updateIcons();
+  function getMode(){
+    return localStorage.getItem(KEY) || 'auto';
   }
   
-  function updateIcons(){
-    const mode = getMode();
-    const icon = mode==='dark' ? '☀️' : '🌙';
+  function readTokenColor(resolvedMode) {
+    const tokenName = resolvedMode === 'dark' ? '--safari-status-bg-dark' : '--safari-status-bg-light';
+    const style = getComputedStyle(document.documentElement);
+    const tokenValue = (style.getPropertyValue(tokenName) || '').trim();
+    if (tokenValue) return tokenValue;
+    return THEME_COLORS[resolvedMode];
+  }
+  
+  function ensureThemeMeta() {
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', 'theme-color');
+      document.head.appendChild(meta);
+    }
+    return meta;
+  }
+  
+  function syncThemeChrome(resolvedMode, options = {}) {
+    const themeMeta = ensureThemeMeta();
+    const color = readTokenColor(resolvedMode);
+    const replacement = themeMeta.cloneNode(false);
+    replacement.setAttribute('content', color);
+    if (themeMeta.id) replacement.id = themeMeta.id;
+    themeMeta.parentNode.replaceChild(replacement, themeMeta);
+    
+    const colorSchemeMeta = document.querySelector('meta[name="color-scheme"]');
+    if (colorSchemeMeta) {
+      colorSchemeMeta.setAttribute('content', resolvedMode === 'dark' ? 'dark light' : 'light dark');
+    }
+    
+    if (!options.skipPulse) {
+      html.dataset.themePulse = Date.now().toString();
+      void document.body.offsetHeight;
+    }
+  }
+  
+  function apply(preference){
+    const resolved = resolveMode(preference);
+    html.setAttribute('data-color-mode', resolved);
+    updateIcons(resolved);
+    syncThemeChrome(resolved);
+  }
+  
+  function updateIcons(resolvedMode){
+    const icon = resolvedMode==='dark' ? '☀️' : '🌙';
     document.querySelectorAll('[data-action="toggle-theme"]').forEach(btn=>{
       btn.innerHTML = icon;
-      btn.setAttribute('aria-label', mode==='dark' ? '切换到亮色模式' : '切换到暗色模式');
+      btn.setAttribute('aria-label', resolvedMode==='dark' ? '切换到亮色模式' : '切换到暗色模式');
     });
   }
   
@@ -98,7 +136,7 @@
   }
   
   // 初始化
-  apply(localStorage.getItem(KEY) || 'auto');
+  apply(getMode());
   
   // 简化事件绑定 - 修复版本
   function initScrollHandler() {
@@ -142,14 +180,29 @@
   document.addEventListener('click', function(e){
     const t=e.target.closest('[data-action="toggle-theme"]');
     if(!t) return;
-    const current = getMode();
-    const next = current==='light' ? 'dark' : 'light';
+    const currentPreference = getMode();
+    const currentResolved = resolveMode(currentPreference);
+    const next = currentResolved==='light' ? 'dark' : 'light';
     localStorage.setItem(KEY, next);
     apply(next);
   });
   
   // 监听系统主题变化
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{
-    apply(localStorage.getItem(KEY) || 'auto');
+    apply(getMode());
+  });
+
+  const resyncChrome = () => {
+    const resolved = html.getAttribute('data-color-mode') || resolveMode(getMode());
+    syncThemeChrome(resolved, { skipPulse: false });
+  };
+
+  window.addEventListener('pageshow', resyncChrome);
+  window.addEventListener('focus', resyncChrome);
+  window.addEventListener('orientationchange', resyncChrome);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      resyncChrome();
+    }
   });
 })();
