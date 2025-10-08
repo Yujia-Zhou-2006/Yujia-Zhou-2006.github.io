@@ -251,9 +251,28 @@ body {
   overflow-y: auto;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top);
+  background: var(--safari-status-bg);
+  pointer-events: none;
+  z-index: 5;
+  transition: background-color 0.25s ease;
+}
+
+@supports(padding: max(0px)) {
+  body::before {
+    height: max(env(safe-area-inset-top), 0px);
+  }
+}
+
 /* 覆盖框架默认的h1-h6 margin-top */
 h1, h2, h3, h4, h5, h6 {
-  margin-top: 4rem !important;
+  margin-top: 0rem !important;
   margin-bottom: 0;
   /* 移除 margin-top: 0; 让标题有自然的顶部间距 */
 }
@@ -303,7 +322,7 @@ html[data-color-mode="dark"] .site-footer {
 }
 :root {
   --bg-default-light: #ffffff;
-  --bg-muted-light: #f6f8fa;
+  --bg-muted-light: #edf0f3;
   --border-light: #d1d9e0;
   --fg-default-light: #1f2328;
   --header-shadow: 0 2px 8px rgba(0,0,0,.08);
@@ -312,9 +331,15 @@ html[data-color-mode="dark"] .site-footer {
   --bg-muted-dark: #020408;
   --border-dark: #363e46;
   --fg-default-dark: #d1d7dc;
+  --safari-status-bg-light: #f6f8fa;
+  --safari-status-bg-dark: #0d1116;
+  --safari-status-bg: var(--safari-status-bg-light);
 }
 html[data-color-mode="dark"] body { background-color: var(--bg-default-dark); color: var(--fg-default-dark); }
 html[data-color-mode="light"] body { background-color: var(--bg-default-light); color: var(--fg-default-light); }
+html[data-color-mode="dark"] {
+  --safari-status-bg: var(--safari-status-bg-dark);
+}
 
 /* 移除.card-grid和.card-container相关的Grid布局，统一用主页的Flexbox+Bootstrap列系统 */
 
@@ -469,13 +494,13 @@ html[data-color-mode="dark"] .scroll-nav nav a:hover {
 }
 
 header.width-full {
-  background: rgba(240, 242, 244, 0.85); /* 使用更灰的背景色 */
+  background: rgba(240, 242, 244, 0.466); /* 使用更灰的背景色 */
   border-bottom: 1px solid rgba(0, 0, 0, 0.2); /* 加深边框，从0.15调到0.2 */
   position: -webkit-sticky; /* Safari兼容 */
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(4px) saturate(80%) contrast(105%) brightness(10%); /* 变灰：大幅降低饱和度到80% */
+  backdrop-filter: blur(4px) saturate(80%) contrast(105%) brightness(100%); /* 变灰：大幅降低饱和度到80% */
   -webkit-backdrop-filter: blur(4px) saturate(80%) contrast(105%) brightness(100%);
   /* Header渐变效果 */
   background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); /* 稍微增加渐变强度 */
