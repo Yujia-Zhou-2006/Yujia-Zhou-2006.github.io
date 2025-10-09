@@ -1,189 +1,149 @@
-
 (function(){
-  const STORAGE_KEY = 'colorMode';
-  const html = document.documentElement;
-  const themeMeta = document.querySelector('meta[name="theme-color"]');
-  const appleStatusMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-  const COLOR_VARS = {
-    light: '--status-bar-light',
-    dark: '--status-bar-dark'
-  };
-  const COLOR_FALLBACKS = {
-    light: '#edf0f3',
-    dark: '#020408'
-  };
-
-  let fabButton;
-  let scrollNav;
+  const KEY='colorMode';
+  const html=document.documentElement;
+  
   let lastScrollY = 0;
-
-  function readStoredMode() {
-    try {
-      return localStorage.getItem(STORAGE_KEY) || 'auto';
-    } catch (_error) {
-      return 'auto';
+  let fab = null;
+  
+  function getMode(){
+    const mode = localStorage.getItem(KEY) || 'auto';
+    if(mode==='light'||mode==='dark') return mode;
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return prefersDark ? 'dark' : 'light';
+  }
+  
+  function apply(mode){
+    if(mode==='light' || mode==='dark'){ html.setAttribute('data-color-mode', mode); }
+    else {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      html.setAttribute('data-color-mode', prefersDark ? 'dark' : 'light');
     }
+    updateIcons();
   }
-
-  function writeStoredMode(value) {
-    try {
-      localStorage.setItem(STORAGE_KEY, value);
-    } catch (_error) {
-      /* ignore */
-    }
-  }
-
-  function resolveCssColor(varName, fallback) {
-    try {
-      const value = getComputedStyle(html).getPropertyValue(varName);
-      return value ? value.trim() : fallback;
-    } catch (error) {
-      return fallback;
-    }
-  }
-
-  function getStatusBarColor(mode) {
-    const varName = COLOR_VARS[mode] || COLOR_VARS.light;
-    const fallback = COLOR_FALLBACKS[mode] || COLOR_FALLBACKS.light;
-    return resolveCssColor(varName, fallback) || fallback;
-  }
-
-  function syncStatusBar(mode) {
-    const normalized = mode === 'dark' ? 'dark' : 'light';
-    const color = getStatusBarColor(normalized);
-    if (themeMeta) {
-      themeMeta.setAttribute('content', color);
-    }
-    if (appleStatusMeta) {
-      appleStatusMeta.setAttribute('content', normalized === 'dark' ? 'black' : 'default');
-    }
-  }
-
-  function prefersDark() {
-    return Boolean(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  }
-
-  function resolveMode(mode) {
-    if (mode === 'light' || mode === 'dark') {
-      return mode;
-    }
-    return prefersDark() ? 'dark' : 'light';
-  }
-
-  function applyMode(mode) {
-    const effective = resolveMode(mode);
-    html.setAttribute('data-color-mode', effective);
-    syncStatusBar(effective);
-    updateToggleIcons(effective);
-  }
-
-  function updateToggleIcons(mode) {
-    const icon = mode === 'dark' ? '☀️' : '🌙';
-    const aria = mode === 'dark' ? '切换到亮色模式' : '切换到暗色模式';
-    document.querySelectorAll('[data-action="toggle-theme"]').forEach(btn => {
-      if (btn.innerHTML !== icon) {
-        btn.innerHTML = icon;
-      }
-      btn.setAttribute('aria-label', aria);
+  
+  function updateIcons(){
+    const mode = getMode();
+    const icon = mode==='dark' ? '☀️' : '🌙';
+    document.querySelectorAll('[data-action="toggle-theme"]').forEach(btn=>{
+      btn.innerHTML = icon;
+      btn.setAttribute('aria-label', mode==='dark' ? '切换到亮色模式' : '切换到暗色模式');
     });
   }
-
-  function computeScrollPosition() {
-    return window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-  }
-
+  
+  // 智能隐藏悬浮按钮和Header第一行
   function handleScroll() {
-    const currentY = computeScrollPosition();
-    const isMobile = window.innerWidth <= 767;
-
-    if (fabButton) {
-      if (currentY < 50 || currentY < lastScrollY - 10) {
-        fabButton.classList.remove('hidden');
-      } else if (currentY > lastScrollY + 10) {
-        fabButton.classList.add('hidden');
+    if (!fab) {
+      fab = document.querySelector('.theme-fab');
+    }
+    if (!fab) return;
+    
+    // 尝试多种方式获取滚动位置
+    const scrollY1 = window.scrollY;
+    const scrollY2 = window.pageYOffset;
+    const scrollY3 = document.documentElement.scrollTop;
+    const scrollY4 = document.body.scrollTop;
+    
+    const currentScrollY = scrollY1 || scrollY2 || scrollY3 || scrollY4 || 0;
+    const scrollThreshold = 50;
+    
+    console.log('Scroll values - window.scrollY:', scrollY1, 'pageYOffset:', scrollY2, 'docElement:', scrollY3, 'body:', scrollY4, 'final:', currentScrollY);
+    
+    // 控制悬浮按钮
+    if (currentScrollY < scrollThreshold) {
+      fab.classList.remove('hidden');
+      console.log('FAB shown - near top, scrollY =', currentScrollY);
+    } else if (currentScrollY > lastScrollY + 10) {
+      fab.classList.add('hidden');
+      console.log('FAB hidden - scrolling down, scrollY =', currentScrollY);
+    } else if (currentScrollY < lastScrollY - 10) {
+      fab.classList.remove('hidden');
+      console.log('FAB shown - scrolling up, scrollY =', currentScrollY);
+    }
+    
+    // 控制手机端悬浮导航栏（仅手机端，反转逻辑：下滑时显示）
+    const mobileFloatNav = document.getElementById('mobileFloatNav');
+    if (mobileFloatNav && window.innerWidth <= 767) {
+      if (currentScrollY < 100) {
+        // 接近顶部时隐藏
+        mobileFloatNav.classList.add('hidden');
+        console.log('Mobile nav hidden - near top, scrollY =', currentScrollY);
+      } else if (currentScrollY > lastScrollY + 10) {
+        // 向下滚动时显示
+        mobileFloatNav.classList.remove('hidden');
+        console.log('Mobile nav shown - scrolling down, scrollY =', currentScrollY);
+      } else if (currentScrollY < lastScrollY - 10) {
+        // 向上滚动时隐藏
+        mobileFloatNav.classList.add('hidden');
+        console.log('Mobile nav hidden - scrolling up, scrollY =', currentScrollY);
       }
     }
-
-    if (isMobile) {
-      if (currentY > 30) {
-        document.body.classList.add('header-title-hidden');
-      } else {
-        document.body.classList.remove('header-title-hidden');
-      }
-
-      if (scrollNav && scrollNav.classList) {
-        if (currentY > 150 && currentY > lastScrollY + 10) {
-          scrollNav.classList.add('scroll-nav-hidden');
-        } else if (currentY < lastScrollY - 10 || currentY <= 150) {
-          scrollNav.classList.remove('scroll-nav-hidden');
-        }
-      }
-    }
-
-    lastScrollY = currentY;
+    
+    // Header不再需要隐藏逻辑，因为已改为静态滚动
+    // 只保留浮动主题按钮功能
+    
+    lastScrollY = currentScrollY;
   }
-
-  function initScrollFeatures() {
-    fabButton = document.querySelector('.theme-fab');
-    scrollNav = document.getElementById('scrollNav');
-    if (!fabButton && !scrollNav) {
-      return;
+  
+  // 初始化
+  apply(localStorage.getItem(KEY) || 'auto');
+  
+  // 简化事件绑定 - 修复版本
+  function initScrollHandler() {
+    fab = document.querySelector('.theme-fab');
+    console.log('Init scroll handler, FAB found:', fab);
+    
+    // 初始化胶囊导航栏为隐藏状态
+    const mobileFloatNav = document.getElementById('mobileFloatNav');
+    if (mobileFloatNav) {
+      mobileFloatNav.classList.add('hidden');
+      console.log('Mobile nav initialized as hidden');
     }
-    handleScroll();
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  window.addEventListener('resize', handleScroll);
-  }
-
-  function toggleTheme() {
-    const current = resolveMode(readStoredMode());
-    const next = current === 'light' ? 'dark' : 'light';
-    writeStoredMode(next);
-    applyMode(next);
-    setTimeout(() => {
-      if (typeof window !== 'undefined' && window.location) {
-        window.location.reload();
-      }
-    }, 350);
-  }
-
-  function bindEvents() {
-    document.addEventListener('click', event => {
-      const target = event.target.closest('[data-action="toggle-theme"]');
-      if (!target) {
-        return;
-      }
-      event.preventDefault();
-      toggleTheme();
-    });
-
-    if (!window.matchMedia) {
-      return;
-    }
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const listener = () => {
-      const stored = readStoredMode();
-      if (stored === 'auto') {
-        applyMode('auto');
-      } else {
-        const effective = resolveMode(stored);
-        syncStatusBar(effective);
-        updateToggleIcons(effective);
-      }
-    };
-    if (typeof media.addEventListener === 'function') {
-      media.addEventListener('change', listener);
-    } else if (typeof media.addListener === 'function') {
-      media.addListener(listener);
+    
+    if (fab) {
+      // 尝试多种绑定方式
+      console.log('Binding scroll events...');
+      
+      // 方式1：绑定到window
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      
+      // 方式2：绑定到document
+      document.addEventListener('scroll', handleScroll, { passive: true });
+      
+      // 方式3：绑定到document.documentElement
+      document.documentElement.addEventListener('scroll', handleScroll, { passive: true });
+      
+      // 方式4：绑定到body
+      document.body.addEventListener('scroll', handleScroll, { passive: true });
+      
+      console.log('All scroll events bound');
+      
+      // 简单测试：直接输出滚动位置
+      setInterval(function() {
+        const y = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+        if (y > 0) console.log('Interval check - ScrollY:', y);
+      }, 1000);
     }
   }
-
-  applyMode(readStoredMode());
-
+  
+  // 等待DOM加载后初始化
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initScrollFeatures);
+    document.addEventListener('DOMContentLoaded', initScrollHandler);
   } else {
-    initScrollFeatures();
+    initScrollHandler();
   }
-
-  bindEvents();
+  
+  // 主题切换点击事件
+  document.addEventListener('click', function(e){
+    const t=e.target.closest('[data-action="toggle-theme"]');
+    if(!t) return;
+    const current = getMode();
+    const next = current==='light' ? 'dark' : 'light';
+    localStorage.setItem(KEY, next);
+    apply(next);
+  });
+  
+  // 监听系统主题变化
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{
+    apply(localStorage.getItem(KEY) || 'auto');
+  });
 })();

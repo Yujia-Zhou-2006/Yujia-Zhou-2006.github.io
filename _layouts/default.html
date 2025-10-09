@@ -2,55 +2,36 @@
 <html lang="en" data-color-mode="auto">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{{ page.title | default: site.title }}</title>
-  <meta name="theme-color" content="#edf0f3">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="https://unpkg.com/@primer/css@^21/dist/primer.css">
+  <link rel="stylesheet" href="{{ '/assets/styles/theme-tokens.css' | relative_url }}">
   
-  <!-- 防止主题切换闪烁 - 必须在CSS加载前执行 -->
+  <!-- 防闪白脚本 - 必须在head中立即执行 -->
   <script>
-    (function() {
-      const STORAGE_KEY = 'colorMode';
-      const COLORS = {
-        light: '#edf0f3',
-        dark: '#020408'
-      };
-
-      function readStoredMode() {
-        try {
-          return localStorage.getItem(STORAGE_KEY) || 'auto';
-        } catch (_error) {
-          return 'auto';
-        }
-      }
-
-      function resolveMode(value) {
-        if (value === 'light' || value === 'dark') {
-          return value;
-        }
+    (function(){
+      const KEY='colorMode';
+      const html=document.documentElement;
+      
+      function getMode(){
+        const mode = localStorage.getItem(KEY) || 'auto';
+        if(mode==='light'||mode==='dark') return mode;
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         return prefersDark ? 'dark' : 'light';
       }
-
-      const mode = resolveMode(readStoredMode());
-      const root = document.documentElement;
-      root.setAttribute('data-color-mode', mode);
-
-      const themeMeta = document.querySelector('meta[name="theme-color"]');
-      if (themeMeta) {
-        themeMeta.setAttribute('content', COLORS[mode] || COLORS.light);
+      
+      function apply(mode){
+        if(mode==='light' || mode==='dark'){ html.setAttribute('data-color-mode', mode); }
+        else {
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          html.setAttribute('data-color-mode', prefersDark ? 'dark' : 'light');
+        }
       }
-
-      const appleStatusMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-      if (appleStatusMeta) {
-        appleStatusMeta.setAttribute('content', mode === 'dark' ? 'black' : 'default');
-      }
+      
+      // 立即应用主题，防止闪白
+      apply(localStorage.getItem(KEY) || 'auto');
     })();
   </script>
-  
-  <link rel="stylesheet" href="https://unpkg.com/@primer/css@^21/dist/primer.css">
-  <link rel="stylesheet" href="{{ '/assets/styles/theme-tokens.css' | relative_url }}">
 </head>
 <body>
   {% include header.html %}

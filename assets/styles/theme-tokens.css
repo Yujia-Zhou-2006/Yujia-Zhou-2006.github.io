@@ -24,15 +24,15 @@
     padding-right: 0rem !important;
   }
   .profile-info {
-    padding-right: clamp(var(--mobile-container-padding), 2vw, 1rem) !important;
+    padding-right: 1rem !important;
   }
   .profile-text {
     padding-right: 0rem !important;
   }
   /* 主页主内容区左右留白，防止卡片贴边 */
   .flex-grow-1 {
-    padding-left: var(--mobile-content-padding) !important;
-    padding-right: var(--mobile-content-padding) !important;
+    padding-left: 0rem !important;
+    padding-right: 1rem !important;
   }
   .home-card-row {
     display: flex !important;
@@ -86,16 +86,6 @@ html[data-color-mode="dark"] .theme-toggle-btn:hover, html[data-color-mode="dark
   color: inherit;
   box-shadow: none;
 }
-
-header.width-full .theme-toggle-btn:hover,
-header.width-full .theme-toggle-btn:focus {
-  background: rgba(255,255,255,0.12);
-}
-
-html[data-color-mode="dark"] header.width-full .theme-toggle-btn:hover,
-html[data-color-mode="dark"] header.width-full .theme-toggle-btn:focus {
-  background: rgba(255,255,255,0.14);
-}
 /* Floating theme toggle button for mobile - 智能隐藏 */
 .theme-fab {
   position: fixed;
@@ -104,7 +94,7 @@ html[data-color-mode="dark"] header.width-full .theme-toggle-btn:focus {
   z-index: 9999;
   width: 48px;
   height: 48px;
-  border-radius: 14px;
+  border-radius: 24px;
   background: rgba(255, 255, 255, 0.2);
   color: #1f2328;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -137,6 +127,120 @@ html[data-color-mode="dark"] .theme-fab {
 @media (min-width: 577px) {
   .theme-fab { display: none !important; }
 }
+
+/* 手机端悬浮毛玻璃导航栏 */
+.mobile-float-nav {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  /* 毛玻璃效果，与主题按钮一致 */
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
+  -webkit-backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  /* 隐藏动画 */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%) translateY(0) scale(1);
+  opacity: 1;
+}
+
+.mobile-float-nav.hidden {
+  transform: translateX(-50%) translateY(-80px) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-color-mode="dark"] .mobile-float-nav {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+}
+
+.mobile-float-nav-content {
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.5rem;
+  gap: 0.25rem;
+}
+
+.mobile-float-nav .nav-btn {
+  padding: 0.375rem 0.625rem;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 55px;
+}
+
+.mobile-float-nav .nav-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+}
+
+html[data-color-mode="dark"] .mobile-float-nav .nav-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* 桌面端隐藏 */
+@media (min-width: 768px) {
+  .mobile-float-nav { display: none !important; }
+}
+
+/* 防止手机端横向滚动 */
+@media (max-width: 767.98px) {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  
+  /* 确保所有容器不超出视口 */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* 特别处理可能导致横向滚动的元素 */
+  .container-xl,
+  .container-lg,
+  .container-md,
+  .container,
+  header,
+  main,
+  footer {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  /* 处理可能的内容溢出 */
+  pre,
+  code,
+  .highlight {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  
+  /* 确保图片和媒体元素响应式 */
+  img,
+  video,
+  iframe,
+  embed,
+  object {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
 /* Home page: one card per row on mobile */
 .home-card-col { max-width: 50%; }
 @media (max-width: 767.98px) {
@@ -155,12 +259,11 @@ html[data-color-mode="dark"] .theme-fab {
     padding-right: 0 !important;
   }
   .container-xl {
-    padding-left: var(--mobile-container-padding) !important;
-    padding-right: var(--mobile-container-padding) !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
     box-sizing: border-box;
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden;
+    width: 100vw !important;
+    max-width: 100vw !important;
   }
   /* 移除body,html的overflow限制，让Safari正确检测滚动 */
   .flex-md-row {
@@ -262,28 +365,6 @@ body {
   overflow-y: auto;
 }
 
-/* 覆盖框架默认的h1-h6 margin-top */
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 0rem !important;
-  margin-bottom: 0;
-  /* 移除 margin-top: 0; 让标题有自然的顶部间距 */
-}
-
-/* 更具体的选择器针对profile中的标题 */
-.profile-text h1,
-.profile-text h2,
-.profile-text h3,
-.profile-text h4,
-.profile-text h5,
-.profile-text h6 {
-  margin-top: 2rem !important;
-}
-
-/* 最具体的选择器针对名字 */
-.profile-text .name-responsive {
-  margin-top: 3rem !important;
-}
-
 /* main区域和footer重新布局 */
 main {
   min-height: calc(100vh - 140px); /* 为header和footer预留空间 */
@@ -314,23 +395,10 @@ html[data-color-mode="dark"] .site-footer {
 }
 :root {
   --bg-default-light: #ffffff;
-  --bg-muted-light: #edf0f3;
+  --bg-muted-light: #f6f8fa;
   --border-light: #d1d9e0;
   --fg-default-light: #1f2328;
   --header-shadow: 0 2px 8px rgba(0,0,0,.08);
-
-  /* Header + 状态栏颜色（供 JS/Meta 复用） */
-  --header-surface-light: #edf0f3;
-  --header-surface-dark: #020408;
-  --status-bar-light: #edf0f3;
-  --status-bar-dark: #020408;
-
-  /* Mobile spacing tokens */
-  --mobile-container-padding: 0.5rem;
-  --mobile-content-padding: 0rem;
-
-  --header-fg-light: #020408;
-  --header-fg-dark: #f0f6fc;
 
   --bg-default-dark: #0d1116;
   --bg-muted-dark: #020408;
@@ -417,88 +485,18 @@ html[data-color-mode="dark"] .sidebar-divider {
 .profile-list li { margin:.25rem 0; line-height:1.35; }
 .inline-icon { vertical-align:text-bottom; }
 
-/* GitHub风格的滚动导航条（完全模仿Header第二行样式） */
-.scroll-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1001;
-  background: var(--header-surface-light);
-  color: var(--header-fg-light);
-  border-bottom: none;
-  transform: translateY(-100%);
-  transition: transform 0.3s ease;
-  display: none; /* 完全隐藏，不参与布局 */
-}
-
-.scroll-nav.scroll-nav-hidden {
-  transform: translateY(-100%);
-}
-
-html[data-color-mode="dark"] .scroll-nav {
-  background: var(--header-surface-dark);
-  color: var(--header-fg-dark);
-  border-bottom: none;
-}
-
-.scroll-nav-content {
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1.5rem;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.scroll-nav-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: inherit;
-  text-decoration: none;
-  margin-right: auto;
-}
-
-.scroll-nav nav {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.scroll-nav nav a {
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: background-color 0.2s;
-  color: inherit;
-  text-decoration: none;
-}
-
-.scroll-nav nav a:hover {
-  background-color: rgba(255,255,255,0.12);
-  text-decoration: none;
-}
-
-html[data-color-mode="dark"] .scroll-nav nav a:hover {
-  background-color: rgba(255,255,255,0.14);
-}
-
-/* 只在手机端显示 */
-@media (min-width: 768px) {
-  .scroll-nav {
-    display: none !important;
-  }
-}
-
 header.width-full {
-  background: var(--header-surface-light);
-  color: var(--header-fg-light);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  position: -webkit-sticky;
+  background: rgba(246, 248, 250, 0.7);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  position: -webkit-sticky; /* Safari兼容 */
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
+  -webkit-backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
+  /* Header渐变效果 */
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  /* 规避iOS Safari系统收缩 */
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
   will-change: transform;
@@ -506,90 +504,35 @@ header.width-full {
   backface-visibility: hidden;
 }
 
-header.width-full a,
-header.width-full button {
-  color: inherit !important;
-}
-
-header.width-full .site-title-logo {
-  color: inherit !important;
-}
-
-/* 手机端Header使用固定定位，完全规避系统收缩 */
+/* 手机端Header不再sticky，跟着页面滚动，导航交给动态导航条 */
 @media (max-width: 767.98px) {
   header.width-full.d-only-mobile {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 1000;
-    /* 强制独立合成层 */
-    -webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
-    will-change: transform;
+    position: static !important;
+    /* 移除所有固定定位相关属性 */
   }
   
-  /* 为固定Header留出空间 */
+  /* 不再需要为固定Header留出空间 */
   main {
-    padding-top: 70px !important; /* 强制应用70px */
+    padding-top: 0;
   }
   
-  /* 当第一行隐藏时，减少padding */
+  /* 移除header隐藏时的padding调整 */
   .header-title-hidden main {
-    padding-top: 50px !important; /* 强制应用50px */
+    padding-top: 0;
   }
 }
 
-/* 手机端Header第一行不使用毛玻璃 */
+/* 手机端Header简化为正常静态header，不使用毛玻璃 */
 @media (max-width: 767.98px) {
   header.width-full.d-only-mobile .container-xl:first-child {
-    background: var(--header-surface-light);
-    color: var(--header-fg-light);
+    background: var(--bg-muted-light);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background-image: none;
-    /* 移除左右padding，让背景撑满屏幕 */
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    /* 滚动隐藏效果 */
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    transform: translateY(0);
-    opacity: 1;
   }
   
-  /* 恢复内容区域的padding */
-  header.width-full.d-only-mobile .container-xl:first-child > .d-flex {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-  
-  /* 为导航栏也添加过渡动画 */
   header.width-full.d-only-mobile .container-xl:last-child {
-    transition: transform 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
-    transform: translateY(0);
-    opacity: 1;
-    color: var(--header-fg-light);
-  }
-  
-  /* 滚动时隐藏Header第一行（所有模式通用） */
-  .header-title-hidden header.width-full.d-only-mobile .container-xl:first-child {
-    transform: translateY(-100%) !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-  
-  /* 暗色模式下也要隐藏第一行 */
-  html[data-color-mode="dark"] .header-title-hidden header.width-full.d-only-mobile .container-xl:first-child {
-    transform: translateY(-100%) !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    background: var(--header-surface-dark) !important;
-  }
-  
-  /* 调整Header第二行位置，当第一行隐藏时 */
-  .header-title-hidden header.width-full.d-only-mobile .container-xl:last-child {
-    margin-top: -2.5rem; /* 向上移动补偿第一行空间 */
+    background: transparent;
   }
 }
 
@@ -610,61 +553,34 @@ header.width-full .site-title-logo {
   padding: 4px 8px;
   border-radius: 6px;
   transition: background-color 0.2s;
-  color: var(--header-fg-light) !important;
-}
-.header-nav a.Link--primary:visited {
-  color: var(--header-fg-light) !important;
 }
 
 .header-nav a.Link--primary:hover {
-  background-color: rgba(255,255,255,0.12);
+  background-color: rgba(0,0,0,0.06);
   text-decoration: none;
 }
 
 html[data-color-mode="dark"] .header-nav a.Link--primary:hover {
-  background-color: rgba(255,255,255,0.14);
-}
-
-html[data-color-mode="dark"] .header-nav a.Link--primary {
-  color: var(--header-fg-dark) !important;
-}
-html[data-color-mode="dark"] .header-nav a.Link--primary:visited {
-  color: var(--header-fg-dark) !important;
+  background-color: rgba(255,255,255,0.06);
 }
 
 html[data-color-mode="dark"] header.width-full {
-  background: var(--header-surface-dark);
-  color: var(--header-fg-dark);
-  border-bottom: 1px solid rgba(240, 246, 252, 0.12);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  background: rgba(13, 17, 22, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
 }
 
 /* 暗色模式下手机端Header第一行不使用毛玻璃 */
 @media (max-width: 767.98px) {
   html[data-color-mode="dark"] header.width-full.d-only-mobile .container-xl:first-child {
-    background: var(--header-surface-dark);
+    background: var(--bg-muted-dark);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background-image: none;
-    /* 移除左右padding，让背景撑满屏幕 */
-    padding-left: 0 !important;
-    padding-right: 0 !important;
     /* 滚动隐藏效果 */
     transition: transform 0.3s ease, opacity 0.3s ease;
     transform: translateY(0);
     opacity: 1;
-    color: var(--header-fg-dark);
-  }
-  
-  /* 恢复内容区域的padding */
-  html[data-color-mode="dark"] header.width-full.d-only-mobile .container-xl:first-child > .d-flex {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    color: var(--header-fg-dark);
-  }
-
-  html[data-color-mode="dark"] header.width-full.d-only-mobile .container-xl:last-child {
-    color: var(--header-fg-dark);
   }
 }
 
@@ -850,7 +766,6 @@ html[data-color-mode="dark"] .profile-avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
 }
 
 /* 响应式头像和布局 - 使用Bootstrap断点系统 */
@@ -863,43 +778,6 @@ html[data-color-mode="dark"] .profile-avatar {
   .profile-section {
     width: 100% !important;
     max-width: 100% !important;
-  }
-
-  /* 桌面端profile-section适当的顶部间距 */
-  @media (min-width: 768px) {
-    .profile-section {
-      margin-top: 0 !important; /* 重置margin */
-      padding-top: 0 !important; /* 重置padding */
-    }
-    
-    /* 重置gutter容器间距 */
-    .gutter-lg-condensed, .gutter-md-condensed, .gutter-condensed {
-      margin-top: 0 !important;
-    }
-    
-    /* 头像容器向下移动并修复高度对齐 - 使用更强的选择器 */
-    .profile-section .profile-avatar-container {
-      margin-top: 4rem !important; /* 增加到4rem，让整个容器下移更多 */
-      padding-bottom: 2rem !important; /* 头像容器下方加padding */
-      height: 294px !important; /* 明确设置容器高度与图片一致 */
-      display: flex !important;
-      align-items: flex-start !important; /* 对齐到容器顶部 */
-    }
-    
-    /* 也尝试更具体的选择器 */
-    .gutter-lg-condensed .profile-section .profile-avatar-container,
-    .gutter-md-condensed .profile-section .profile-avatar-container,
-    .gutter-condensed .profile-section .profile-avatar-container {
-      margin-top: 4rem !important;
-      padding-bottom: 2rem !important;
-    }
-    
-    /* 头像本身的定位，确保与容器对齐 */
-    .profile-avatar {
-      margin: 0 !important; /* 重置所有margin */
-      margin-bottom: 0 !important; /* 强制移除bottom margin */
-      display: block !important;
-    }
   }
 
   .profile-info {
@@ -934,7 +812,7 @@ html[data-color-mode="dark"] .profile-avatar {
 
 @media (min-width: 768px) {
   .profile-avatar {
-    margin-bottom: 0 !important; /* 移除底部边距 */
+    margin-bottom: 2.2rem !important;
   }
   
   .profile-info .d-flex {
@@ -942,7 +820,7 @@ html[data-color-mode="dark"] .profile-avatar {
   }
   
   .profile-text {
-    margin-top: 1rem !important; /* 向下移动名字和自我介绍 */
+    margin-top: 0 !important;
     margin-left: 0 !important;
   }
   
@@ -959,5 +837,18 @@ html[data-color-mode="dark"] .profile-avatar {
   .main-card-section {
     max-height: 700px;
     overflow-y: auto;
+  }
+}
+
+/* 覆盖主容器的margin设置 */
+.my-4 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 0 !important;
+}
+
+@media (min-width: 768px) {
+  .my-md-6 {
+    margin-top: 2rem !important;
+    margin-bottom: 0 !important;
   }
 }
