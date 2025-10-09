@@ -2,33 +2,49 @@
 <html lang="en" data-color-mode="auto">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Dev Log Template</title>
-  <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#f6f8fa" id="theme-color-meta">
+  <meta name="theme-color" content="#edf0f3">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   
   <!-- 防止主题切换闪烁 - 必须在CSS加载前执行 -->
   <script>
     (function() {
-      const KEY = 'colorMode';
-      const saved = localStorage.getItem(KEY) || 'auto';
-      let mode = saved;
-      const LIGHT_COLOR = '#f6f8fa';
-      const DARK_COLOR = '#0d1116';
-      
-      if (mode === 'auto') {
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        mode = prefersDark ? 'dark' : 'light';
+      const STORAGE_KEY = 'colorMode';
+      const COLORS = {
+        light: '#edf0f3',
+        dark: '#020408'
+      };
+
+      function readStoredMode() {
+        try {
+          return localStorage.getItem(STORAGE_KEY) || 'auto';
+        } catch (_error) {
+          return 'auto';
+        }
       }
-      
-      document.documentElement.setAttribute('data-color-mode', mode);
+
+      function resolveMode(value) {
+        if (value === 'light' || value === 'dark') {
+          return value;
+        }
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        return prefersDark ? 'dark' : 'light';
+      }
+
+      const mode = resolveMode(readStoredMode());
+      const root = document.documentElement;
+      root.setAttribute('data-color-mode', mode);
+
       const themeMeta = document.querySelector('meta[name="theme-color"]');
       if (themeMeta) {
-        themeMeta.setAttribute('content', mode === 'dark' ? DARK_COLOR : LIGHT_COLOR);
+        themeMeta.setAttribute('content', COLORS[mode] || COLORS.light);
       }
-      const colorSchemeMeta = document.querySelector('meta[name="color-scheme"]');
-      if (colorSchemeMeta) {
-        colorSchemeMeta.setAttribute('content', mode === 'dark' ? 'dark light' : 'light dark');
+
+      const appleStatusMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+      if (appleStatusMeta) {
+        appleStatusMeta.setAttribute('content', mode === 'dark' ? 'black' : 'default');
       }
     })();
   </script>

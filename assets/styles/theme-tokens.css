@@ -24,15 +24,15 @@
     padding-right: 0rem !important;
   }
   .profile-info {
-    padding-right: 1rem !important;
+    padding-right: clamp(var(--mobile-container-padding), 2vw, 1rem) !important;
   }
   .profile-text {
     padding-right: 0rem !important;
   }
   /* 主页主内容区左右留白，防止卡片贴边 */
   .flex-grow-1 {
-    padding-left: 0rem !important;
-    padding-right: 1rem !important;
+    padding-left: var(--mobile-content-padding) !important;
+    padding-right: var(--mobile-content-padding) !important;
   }
   .home-card-row {
     display: flex !important;
@@ -85,6 +85,16 @@ html[data-color-mode="dark"] .theme-toggle-btn:hover, html[data-color-mode="dark
   background: rgba(255,255,255,0.06);
   color: inherit;
   box-shadow: none;
+}
+
+header.width-full .theme-toggle-btn:hover,
+header.width-full .theme-toggle-btn:focus {
+  background: rgba(255,255,255,0.12);
+}
+
+html[data-color-mode="dark"] header.width-full .theme-toggle-btn:hover,
+html[data-color-mode="dark"] header.width-full .theme-toggle-btn:focus {
+  background: rgba(255,255,255,0.14);
 }
 /* Floating theme toggle button for mobile - 智能隐藏 */
 .theme-fab {
@@ -145,11 +155,12 @@ html[data-color-mode="dark"] .theme-fab {
     padding-right: 0 !important;
   }
   .container-xl {
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+    padding-left: var(--mobile-container-padding) !important;
+    padding-right: var(--mobile-container-padding) !important;
     box-sizing: border-box;
-    width: 100vw !important;
-    max-width: 100vw !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden;
   }
   /* 移除body,html的overflow限制，让Safari正确检测滚动 */
   .flex-md-row {
@@ -251,25 +262,6 @@ body {
   overflow-y: auto;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-top);
-  background: var(--safari-status-bg);
-  pointer-events: none;
-  z-index: 5;
-  transition: background-color 0.25s ease;
-}
-
-@supports(padding: max(0px)) {
-  body::before {
-    height: max(env(safe-area-inset-top), 0px);
-  }
-}
-
 /* 覆盖框架默认的h1-h6 margin-top */
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0rem !important;
@@ -327,19 +319,26 @@ html[data-color-mode="dark"] .site-footer {
   --fg-default-light: #1f2328;
   --header-shadow: 0 2px 8px rgba(0,0,0,.08);
 
+  /* Header + 状态栏颜色（供 JS/Meta 复用） */
+  --header-surface-light: #edf0f3;
+  --header-surface-dark: #020408;
+  --status-bar-light: #edf0f3;
+  --status-bar-dark: #020408;
+
+  /* Mobile spacing tokens */
+  --mobile-container-padding: 0.5rem;
+  --mobile-content-padding: 0rem;
+
+  --header-fg-light: #020408;
+  --header-fg-dark: #f0f6fc;
+
   --bg-default-dark: #0d1116;
   --bg-muted-dark: #020408;
   --border-dark: #363e46;
   --fg-default-dark: #d1d7dc;
-  --safari-status-bg-light: #f6f8fa;
-  --safari-status-bg-dark: #0d1116;
-  --safari-status-bg: var(--safari-status-bg-light);
 }
 html[data-color-mode="dark"] body { background-color: var(--bg-default-dark); color: var(--fg-default-dark); }
 html[data-color-mode="light"] body { background-color: var(--bg-default-light); color: var(--fg-default-light); }
-html[data-color-mode="dark"] {
-  --safari-status-bg: var(--safari-status-bg-dark);
-}
 
 /* 移除.card-grid和.card-container相关的Grid布局，统一用主页的Flexbox+Bootstrap列系统 */
 
@@ -425,11 +424,9 @@ html[data-color-mode="dark"] .sidebar-divider {
   left: 0;
   right: 0;
   z-index: 1001;
-  background: rgba(246, 248, 250, 0.7);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
-  -webkit-backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  background: var(--header-surface-light);
+  color: var(--header-fg-light);
+  border-bottom: none;
   transform: translateY(-100%);
   transition: transform 0.3s ease;
   display: none; /* 完全隐藏，不参与布局 */
@@ -440,9 +437,9 @@ html[data-color-mode="dark"] .sidebar-divider {
 }
 
 html[data-color-mode="dark"] .scroll-nav {
-  background: rgba(13, 17, 22, 0.7);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  background: var(--header-surface-dark);
+  color: var(--header-fg-dark);
+  border-bottom: none;
 }
 
 .scroll-nav-content {
@@ -478,12 +475,12 @@ html[data-color-mode="dark"] .scroll-nav {
 }
 
 .scroll-nav nav a:hover {
-  background-color: rgba(0,0,0,0.06);
+  background-color: rgba(255,255,255,0.12);
   text-decoration: none;
 }
 
 html[data-color-mode="dark"] .scroll-nav nav a:hover {
-  background-color: rgba(255,255,255,0.06);
+  background-color: rgba(255,255,255,0.14);
 }
 
 /* 只在手机端显示 */
@@ -494,22 +491,28 @@ html[data-color-mode="dark"] .scroll-nav nav a:hover {
 }
 
 header.width-full {
-  background: rgba(240, 242, 244, 0.466); /* 使用更灰的背景色 */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2); /* 加深边框，从0.15调到0.2 */
-  position: -webkit-sticky; /* Safari兼容 */
+  background: var(--header-surface-light);
+  color: var(--header-fg-light);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(4px) saturate(80%) contrast(105%) brightness(100%); /* 变灰：大幅降低饱和度到80% */
-  -webkit-backdrop-filter: blur(4px) saturate(80%) contrast(105%) brightness(100%);
-  /* Header渐变效果 */
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); /* 稍微增加渐变强度 */
-  /* 规避iOS Safari系统收缩 */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+
+header.width-full a,
+header.width-full button {
+  color: inherit !important;
+}
+
+header.width-full .site-title-logo {
+  color: inherit !important;
 }
 
 /* 手机端Header使用固定定位，完全规避系统收缩 */
@@ -541,7 +544,8 @@ header.width-full {
 /* 手机端Header第一行不使用毛玻璃 */
 @media (max-width: 767.98px) {
   header.width-full.d-only-mobile .container-xl:first-child {
-    background: var(--bg-muted-light);
+    background: var(--header-surface-light);
+    color: var(--header-fg-light);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background-image: none;
@@ -565,6 +569,7 @@ header.width-full {
     transition: transform 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
     transform: translateY(0);
     opacity: 1;
+    color: var(--header-fg-light);
   }
   
   /* 滚动时隐藏Header第一行（所有模式通用） */
@@ -579,7 +584,7 @@ header.width-full {
     transform: translateY(-100%) !important;
     opacity: 0 !important;
     pointer-events: none !important;
-    background: var(--bg-muted-dark) !important;
+    background: var(--header-surface-dark) !important;
   }
   
   /* 调整Header第二行位置，当第一行隐藏时 */
@@ -605,27 +610,39 @@ header.width-full {
   padding: 4px 8px;
   border-radius: 6px;
   transition: background-color 0.2s;
+  color: var(--header-fg-light) !important;
+}
+.header-nav a.Link--primary:visited {
+  color: var(--header-fg-light) !important;
 }
 
 .header-nav a.Link--primary:hover {
-  background-color: rgba(0,0,0,0.06);
+  background-color: rgba(255,255,255,0.12);
   text-decoration: none;
 }
 
 html[data-color-mode="dark"] .header-nav a.Link--primary:hover {
-  background-color: rgba(255,255,255,0.06);
+  background-color: rgba(255,255,255,0.14);
+}
+
+html[data-color-mode="dark"] .header-nav a.Link--primary {
+  color: var(--header-fg-dark) !important;
+}
+html[data-color-mode="dark"] .header-nav a.Link--primary:visited {
+  color: var(--header-fg-dark) !important;
 }
 
 html[data-color-mode="dark"] header.width-full {
-  background: rgba(13, 17, 22, 0.7);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  background: var(--header-surface-dark);
+  color: var(--header-fg-dark);
+  border-bottom: 1px solid rgba(240, 246, 252, 0.12);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 /* 暗色模式下手机端Header第一行不使用毛玻璃 */
 @media (max-width: 767.98px) {
   html[data-color-mode="dark"] header.width-full.d-only-mobile .container-xl:first-child {
-    background: var(--bg-muted-dark);
+    background: var(--header-surface-dark);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background-image: none;
@@ -636,12 +653,18 @@ html[data-color-mode="dark"] header.width-full {
     transition: transform 0.3s ease, opacity 0.3s ease;
     transform: translateY(0);
     opacity: 1;
+    color: var(--header-fg-dark);
   }
   
   /* 恢复内容区域的padding */
   html[data-color-mode="dark"] header.width-full.d-only-mobile .container-xl:first-child > .d-flex {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+    color: var(--header-fg-dark);
+  }
+
+  html[data-color-mode="dark"] header.width-full.d-only-mobile .container-xl:last-child {
+    color: var(--header-fg-dark);
   }
 }
 
