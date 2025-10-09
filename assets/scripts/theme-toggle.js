@@ -143,7 +143,7 @@
       if (typeof window !== 'undefined' && window.location) {
         window.location.reload();
       }
-    }, 0);
+    }, 350);
   }
 
   function bindEvents() {
