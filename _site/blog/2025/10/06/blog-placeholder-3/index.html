@@ -2,55 +2,36 @@
 <html lang="en" data-color-mode="auto">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Blog Placeholder 3</title>
-  <meta name="theme-color" content="#edf0f3">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="https://unpkg.com/@primer/css@^21/dist/primer.css">
+  <link rel="stylesheet" href="/assets/styles/theme-tokens.css">
   
-  <!-- 防止主题切换闪烁 - 必须在CSS加载前执行 -->
+  <!-- 防闪白脚本 - 必须在head中立即执行 -->
   <script>
-    (function() {
-      const STORAGE_KEY = 'colorMode';
-      const COLORS = {
-        light: '#edf0f3',
-        dark: '#020408'
-      };
-
-      function readStoredMode() {
-        try {
-          return localStorage.getItem(STORAGE_KEY) || 'auto';
-        } catch (_error) {
-          return 'auto';
-        }
-      }
-
-      function resolveMode(value) {
-        if (value === 'light' || value === 'dark') {
-          return value;
-        }
+    (function(){
+      const KEY='colorMode';
+      const html=document.documentElement;
+      
+      function getMode(){
+        const mode = localStorage.getItem(KEY) || 'auto';
+        if(mode==='light'||mode==='dark') return mode;
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         return prefersDark ? 'dark' : 'light';
       }
-
-      const mode = resolveMode(readStoredMode());
-      const root = document.documentElement;
-      root.setAttribute('data-color-mode', mode);
-
-      const themeMeta = document.querySelector('meta[name="theme-color"]');
-      if (themeMeta) {
-        themeMeta.setAttribute('content', COLORS[mode] || COLORS.light);
+      
+      function apply(mode){
+        if(mode==='light' || mode==='dark'){ html.setAttribute('data-color-mode', mode); }
+        else {
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          html.setAttribute('data-color-mode', prefersDark ? 'dark' : 'light');
+        }
       }
-
-      const appleStatusMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-      if (appleStatusMeta) {
-        appleStatusMeta.setAttribute('content', mode === 'dark' ? 'black' : 'default');
-      }
+      
+      // 立即应用主题，防止闪白
+      apply(localStorage.getItem(KEY) || 'auto');
     })();
   </script>
-  
-  <link rel="stylesheet" href="https://unpkg.com/@primer/css@^21/dist/primer.css">
-  <link rel="stylesheet" href="/assets/styles/theme-tokens.css">
 </head>
 <body>
   
@@ -83,18 +64,14 @@
 <!-- End mobile header -->
 </header>
 
-<!-- GitHub风格的滚动导航条（模仿Header第二行） -->
-<div class="scroll-nav" id="scrollNav">
-  <div class="scroll-nav-content">
-    <a href="/" class="scroll-nav-title">Yujia-site</a>
-    <nav class="d-flex flex-items-center">
-      <a class="Link--primary" href="/">Home</a>
-      <a class="Link--primary" href="/pages/projects/">Projects</a>
-      <a class="Link--primary" href="/pages/blog/">Blog</a>
-      <a class="Link--primary" href="/pages/about/">About Site</a>
-      <button class="theme-toggle-btn" data-action="toggle-theme" aria-label="Theme toggle" style="margin-left: 0.5em;"></button>
-    </nav>
-  </div>
+<!-- 手机端悬浮毛玻璃导航栏 -->
+<div class="mobile-float-nav d-only-mobile" id="mobileFloatNav">
+  <nav class="mobile-float-nav-content">
+    <a class="nav-btn" href="/" aria-label="Home">Home</a>
+    <a class="nav-btn" href="/pages/projects/" aria-label="Projects">Projects</a>
+    <a class="nav-btn" href="/pages/blog/" aria-label="Blog">Blog</a>
+    <a class="nav-btn" href="/pages/about/" aria-label="About">About</a>
+  </nav>
 </div>
 
 <!-- Floating theme toggle for mobile -->
