@@ -1,35 +1,26 @@
 <!doctype html>
-<html lang="en" data-color-mode="auto">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,viewport-fit=cover">
   <title>About this website</title>
   <link rel="stylesheet" href="https://unpkg.com/@primer/css@^21/dist/primer.css">
   <link rel="stylesheet" href="/assets/styles/theme-tokens.css">
   
-  <!-- 防闪白脚本 - 必须在head中立即执行 -->
+  <!-- 标准防闪白脚本 -->
   <script>
     (function(){
-      const KEY='colorMode';
-      const html=document.documentElement;
+      const savedTheme = localStorage.getItem('theme') || 'auto';
+      document.documentElement.setAttribute('data-theme', savedTheme);
       
-      function getMode(){
-        const mode = localStorage.getItem(KEY) || 'auto';
-        if(mode==='light'||mode==='dark') return mode;
+      // 同时设置 data-color-mode 以兼容现有样式
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-color-mode', savedTheme);
+      } else {
+        // auto 模式：检测系统偏好
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        return prefersDark ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-color-mode', prefersDark ? 'dark' : 'light');
       }
-      
-      function apply(mode){
-        if(mode==='light' || mode==='dark'){ html.setAttribute('data-color-mode', mode); }
-        else {
-          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          html.setAttribute('data-color-mode', prefersDark ? 'dark' : 'light');
-        }
-      }
-      
-      // 立即应用主题，防止闪白
-      apply(localStorage.getItem(KEY) || 'auto');
     })();
   </script>
 </head>
