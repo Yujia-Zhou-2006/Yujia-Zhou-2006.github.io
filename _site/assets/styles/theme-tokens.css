@@ -1,3 +1,86 @@
+/* 强制禁止移动端缩放 */
+html, body {
+  touch-action: manipulation !important;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: 100% !important;
+  -ms-text-size-adjust: 100% !important;
+}
+
+/* 禁止双击缩放和手势缩放 */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* 允许文本选择（仅在需要的地方） */
+p, span, div, h1, h2, h3, h4, h5, h6, li, td, th, textarea, input[type="text"], input[type="email"], input[type="password"] {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+/* 防止iOS Safari双击缩放 */
+@media screen and (max-width: 767px) {
+  html {
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+  
+  /* 强制禁用缩放手势 */
+  body {
+    touch-action: pan-x pan-y !important;
+    -ms-touch-action: pan-x pan-y !important;
+  }
+}
+
+/* 标准主题切换系统 */
+/* 使用 data-theme 属性和 prefers-color-scheme 媒体查询 */
+
+/* 浅色主题 - 默认 */
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* 深色主题 */
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* 自动跟随系统 */
+html[data-theme="auto"] {
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] {
+    color-scheme: dark;
+  }
+}
+
+/* 兼容现有的 data-color-mode 选择器，但使用标准方式 */
+html[data-theme="light"] {
+  /* 相当于原来的 data-color-mode="light" */
+}
+
+html[data-theme="dark"] {
+  /* 相当于原来的 data-color-mode="dark" */
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] {
+    /* 系统深色模式下的自动样式 */
+  }
+}
+
 @media (max-width: 767.98px) {
   .site-footer .container-xl {
     flex-direction: column !important;
@@ -86,8 +169,10 @@ html[data-color-mode="dark"] .theme-toggle-btn:hover, html[data-color-mode="dark
   color: inherit;
   box-shadow: none;
 }
-/* Floating theme toggle button for mobile - 智能隐藏 */
+/* Floating theme toggle button for mobile - 完全隐藏 */
 .theme-fab {
+  display: none !important; /* 强制隐藏主题按钮 */
+  visibility: hidden !important;
   position: fixed;
   right: 1rem;
   bottom: 1rem;
@@ -99,7 +184,6 @@ html[data-color-mode="dark"] .theme-toggle-btn:hover, html[data-color-mode="dark
   color: #1f2328;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.6rem;
@@ -143,10 +227,23 @@ html[data-color-mode="dark"] .theme-fab {
   backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
   -webkit-backdrop-filter: blur(4px) saturate(130%) contrast(105%) brightness(102%);
   background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-  /* 隐藏动画 */
+  /* 页面加载时完全隐藏，无动画 */
+  transform: translateX(-50%) translateY(-80px) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+  /* 初始状态不设置 transition，避免页面加载时的动画 */
+}
+
+/* 启用动画 - 只有在JavaScript添加此类后才有动画效果 */
+.mobile-float-nav.nav-ready {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 显示状态 - 当JavaScript移除.hidden类时触发 */
+.mobile-float-nav.nav-ready:not(.hidden) {
   transform: translateX(-50%) translateY(0) scale(1);
   opacity: 1;
+  pointer-events: auto;
 }
 
 .mobile-float-nav.hidden {
@@ -188,8 +285,17 @@ html[data-color-mode="dark"] .mobile-float-nav {
   text-decoration: none;
 }
 
+.mobile-float-nav .nav-btn:active {
+  transform: scale(0.85);
+  background: rgba(0, 0, 0, 0.1);
+}
+
 html[data-color-mode="dark"] .mobile-float-nav .nav-btn:hover {
   background: rgba(255, 255, 255, 0.06);
+}
+
+html[data-color-mode="dark"] .mobile-float-nav .nav-btn:active {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* 桌面端隐藏 */
