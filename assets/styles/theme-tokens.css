@@ -140,24 +140,9 @@ html[data-theme="dark"] {
     transform: translateX(0.5rem);
   }
 }
-/* Desktop theme toggle button hover effect */
+/* Desktop theme toggle button - 完全隐藏 */
 .theme-toggle-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.4em;
-  height: 2.4em;
-  min-width: 2.4em;
-  min-height: 2.4em;
-  border-radius: 8px;
-  background: transparent;
-  color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  margin-left: 0.5em;
-  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-  font-size: 1em;
+  display: none !important;
 }
 .theme-toggle-btn:hover, .theme-toggle-btn:focus {
   background: rgba(0,0,0,0.06);
