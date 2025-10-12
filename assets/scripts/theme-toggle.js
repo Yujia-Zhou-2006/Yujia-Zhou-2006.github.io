@@ -205,13 +205,16 @@
     }, 200);
   });
   
-  // 头像点击切换功能 - 支持多张图片循环
-  document.addEventListener('click', function(e){
-    const avatar = e.target.closest('[data-action="toggle-avatar"]');
-    if (!avatar) return;
+  // 头像点击切换功能 - 支持多张图片循环（优化版）
+  let availableAvatars = []; // 缓存可用的头像列表
+  let isCheckingAvatars = false; // 防止重复检查
+  
+  // 异步检查并缓存可用的头像
+  function checkAvailableAvatars() {
+    if (isCheckingAvatars) return Promise.resolve(availableAvatars);
+    isCheckingAvatars = true;
     
-    // 定义所有可用的头像图片（按顺序）
-    const avatarList = [
+    const allAvatars = [
       '/assets/avatar.jpg',
       '/assets/avatar2.jpg',
       '/assets/avatar3.jpg',
@@ -219,85 +222,92 @@
       '/assets/avatar5.jpg'
     ];
     
-    // 获取当前图片路径
-    const currentSrc = avatar.getAttribute('src');
-    
-    // 找到当前图片在列表中的索引
-    let currentIndex = avatarList.findIndex(src => currentSrc.includes(src.split('/').pop()));
-    
-    // 如果没找到，默认从第一张开始
-    if (currentIndex === -1) {
-      currentIndex = 0;
-    }
+    return Promise.all(allAvatars.map(src => {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(src);
+        img.onerror = () => resolve(null);
+        img.src = src;
+      });
+    })).then(results => {
+      availableAvatars = results.filter(src => src !== null);
+      console.log('Available avatars cached:', availableAvatars);
+      return availableAvatars;
+    });
+  }
+  
+  document.addEventListener('click', function(e){
+    const avatar = e.target.closest('[data-action="toggle-avatar"]');
+    if (!avatar) return;
     
     // 添加点击动画
     avatar.style.transform = 'scale(0.95)';
     avatar.style.transition = 'transform 0.15s ease';
     
-    setTimeout(() => {
-      // 尝试下一张图片
-      let nextIndex = (currentIndex + 1) % avatarList.length;
-      let attempts = 0;
-      
-      const tryNextAvatar = () => {
-        if (attempts >= avatarList.length) {
-          // 如果所有图片都尝试过了，回到第一张
-          avatar.setAttribute('src', avatarList[0]);
-          localStorage.setItem('selectedAvatarIndex', '0');
-          avatar.style.transform = 'scale(1)';
-          setTimeout(() => { avatar.style.transition = ''; }, 75);
-          return;
-        }
-        
-        const nextAvatar = avatarList[nextIndex];
-        
-        // 创建一个新的Image对象来测试图片是否存在
-        const testImg = new Image();
-        testImg.onload = function() {
-          // 图片存在，使用它
-          avatar.setAttribute('src', nextAvatar);
-          localStorage.setItem('selectedAvatarIndex', nextIndex.toString());
-          avatar.style.transform = 'scale(1)';
-          setTimeout(() => { avatar.style.transition = ''; }, 75);
-        };
-        testImg.onerror = function() {
-          // 图片不存在，尝试下一张
-          attempts++;
-          nextIndex = (nextIndex + 1) % avatarList.length;
-          tryNextAvatar();
-        };
-        testImg.src = nextAvatar;
-      };
-      
-      tryNextAvatar();
-    }, 75);
+    // 如果还没有缓存可用头像，先检查
+    if (availableAvatars.length === 0) {
+      checkAvailableAvatars().then(() => {
+        switchToNextAvatar(avatar);
+      });
+    } else {
+      // 直接切换，无延迟
+      switchToNextAvatar(avatar);
+    }
   });
   
-  // 页面加载时恢复用户选择的头像
+  function switchToNextAvatar(avatar) {
+    if (availableAvatars.length === 0) {
+      console.log('No available avatars found');
+      avatar.style.transform = 'scale(1)';
+      setTimeout(() => { avatar.style.transition = ''; }, 75);
+      return;
+    }
+    
+    const currentSrc = avatar.getAttribute('src');
+    let currentIndex = availableAvatars.findIndex(src => currentSrc.includes(src.split('/').pop()));
+    
+    // 如果没找到或者只有一张图片，使用第一张
+    if (currentIndex === -1) currentIndex = 0;
+    
+    // 计算下一张图片索引
+    const nextIndex = (currentIndex + 1) % availableAvatars.length;
+    const nextAvatar = availableAvatars[nextIndex];
+    
+    // 立即切换图片，无额外延迟
+    avatar.setAttribute('src', nextAvatar);
+    localStorage.setItem('selectedAvatarIndex', nextIndex.toString());
+    
+    // 恢复动画
+    setTimeout(() => {
+      avatar.style.transform = 'scale(1)';
+      setTimeout(() => { avatar.style.transition = ''; }, 75);
+    }, 10); // 很短的延迟，确保图片加载开始
+  }
+  
+  // 页面加载时恢复用户选择的头像（优化版）
   document.addEventListener('DOMContentLoaded', function(){
     const avatar = document.getElementById('profileAvatar');
     if (!avatar) return;
     
-    const avatarList = [
-      '/assets/avatar.jpg',
-      '/assets/avatar2.jpg',
-      '/assets/avatar3.jpg',
-      '/assets/avatar4.jpg',
-      '/assets/avatar5.jpg'
-    ];
-    
     const selectedIndex = localStorage.getItem('selectedAvatarIndex');
-    if (selectedIndex && avatarList[selectedIndex]) {
-      // 验证保存的头像是否存在
-      const testImg = new Image();
-      testImg.onload = function() {
-        avatar.setAttribute('src', avatarList[selectedIndex]);
-      };
-      testImg.onerror = function() {
-        // 如果保存的图片不存在，使用第一张
-        localStorage.setItem('selectedAvatarIndex', '0');
-      };
-      testImg.src = avatarList[selectedIndex];
+    if (selectedIndex) {
+      // 先检查可用头像，然后恢复选择
+      checkAvailableAvatars().then(() => {
+        const index = parseInt(selectedIndex);
+        if (availableAvatars[index]) {
+          avatar.setAttribute('src', availableAvatars[index]);
+          console.log('Restored avatar:', availableAvatars[index]);
+        } else {
+          // 如果保存的索引无效，重置为第一张
+          if (availableAvatars.length > 0) {
+            avatar.setAttribute('src', availableAvatars[0]);
+            localStorage.setItem('selectedAvatarIndex', '0');
+          }
+        }
+      });
+    } else {
+      // 没有保存的选择，检查可用头像以备后用
+      checkAvailableAvatars();
     }
   });
 })();
