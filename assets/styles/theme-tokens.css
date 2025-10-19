@@ -81,7 +81,42 @@ html[data-theme="dark"] {
   }
 }
 
+/* 桌面端文章页面优化 - 居中布局和合适宽度 */
+@media (min-width: 768px) {
+  /* 文章页面容器居中并限制最大宽度 */
+  main.container-xl:has(article.markdown-body) {
+    max-width: 800px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+  }
+  
+  /* 如果浏览器不支持:has()，直接针对文章容器 */
+  article.markdown-body {
+    max-width: 720px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+}
+
 @media (max-width: 767.98px) {
+  /* 手机端文章页面专用边距 - 只影响包含文章的页面 */
+  main.container-xl:has(article.markdown-body) {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  
+  /* 如果浏览器不支持:has()，使用备用方案 */
+  article.markdown-body {
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
   .site-footer .container-xl {
     flex-direction: column !important;
     align-items: center !important;
