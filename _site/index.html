@@ -87,14 +87,80 @@
             <hr class="my-3 sidebar-divider">
           </div>
           <div class="about-content">
-            <h2 class="h4">About</h2>
-            <ul class="list-style-none p-0 m-0 profile-list">
-              <li><strong>Name:</strong> Yujia Zhou</li>
-              <li><strong>Birthday:</strong> 2006/09/04</li>
-              <li><strong>Location:</strong> USA PA Harrisburg </li>
-              <li><strong>School:</strong> PSU Harrisburg</li>
-              <li><strong>Hobbies:</strong> Modeling,Pixel art,Coding</li>
-            </ul>
+            <h2 class="h4 mb-3">About</h2>
+            <div class="profile-info-grid">
+              <div class="profile-item clickable-card" data-profile="birthday">
+                <span class="profile-icon">🎂</span>
+                <div class="profile-detail">
+                  <span class="profile-label">Birthday</span>
+                  <span class="profile-value">2006/09/04</span>
+                </div>
+              </div>
+              <div class="profile-item clickable-card" data-profile="location">
+                <span class="profile-icon">📍</span>
+                <div class="profile-detail">
+                  <span class="profile-label">Location</span>
+                  <span class="profile-value">USA PA Harrisburg </span>
+                </div>
+              </div>
+              <div class="profile-item clickable-card" data-profile="school">
+                <span class="profile-icon">🎓</span>
+                <div class="profile-detail">
+                  <span class="profile-label">School</span>
+                  <span class="profile-value">PSU Harrisburg</span>
+                </div>
+              </div>
+              <div class="profile-item clickable-card" data-profile="hobbies">
+                <span class="profile-icon">🎨</span>
+                <div class="profile-detail">
+                  <span class="profile-label">Hobbies</span>
+                  <span class="profile-value">Modeling,Pixel art,Coding</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 毛玻璃弹窗 -->
+            <div id="profileModal" class="profile-modal" style="display: none;">
+              <div class="profile-modal-backdrop" id="profileModalBackdrop"></div>
+              <div class="profile-modal-content">
+                <div class="profile-modal-header">
+                  <div class="profile-modal-titles">
+                    <h3 id="profileModalTitle">Title</h3>
+                    <p id="profileModalSubtitle" class="profile-modal-subtitle">Subtitle</p>
+                  </div>
+                  <button class="profile-modal-close" id="profileModalClose">×</button>
+                </div>
+                <div class="profile-modal-body">
+                  <p id="profileModalDescription">Description</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 配置数据 -->
+            <script type="application/json" id="profileDetailsData">
+              {
+                "birthday": {
+                  "title": "Birthday",
+                  "value": "2006/09/04",
+                  "description": "Born on September 4th, 2006. A Gen Z developer passionate about retro gaming aesthetics and modern web technologies."
+                },
+                "location": {
+                  "title": "Location",
+                  "value": "USA PA Harrisburg ",
+                  "description": "Currently living in Harrisburg, Pennsylvania, USA. Enjoying the blend of small-town charm and tech opportunities."
+                },
+                "school": {
+                  "title": "School",
+                  "value": "PSU Harrisburg",
+                  "description": "Studying at Penn State Harrisburg, focusing on computer science and digital arts. Active in campus tech communities."
+                },
+                "hobbies": {
+                  "title": "Hobbies",
+                  "value": "Modeling,Pixel art,Coding",
+                  "description": "Passionate about building detailed plastic model kits, creating pixel art with limited color palettes, and developing games in PICO-8. Always exploring the intersection of physical and digital creativity."
+                }
+              }
+            </script>
           </div>
         </div>
       </div>
@@ -103,7 +169,7 @@
 
   <section class="flex-grow-1" style="min-width: 0; width: 100%;">
     <header class="mb-4">
-      <h1 class="f2-light m-0">Hello, I am Yujia Zhou</h1>
+      <h1 class="f2-light m-0"></h1>
     </header>
 
     <section class="mb-5">

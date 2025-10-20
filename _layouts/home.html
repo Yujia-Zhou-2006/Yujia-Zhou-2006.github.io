@@ -20,14 +20,80 @@ layout: default
             <hr class="my-3 sidebar-divider">
           </div>
           <div class="about-content">
-            <h2 class="h4">About</h2>
-            <ul class="list-style-none p-0 m-0 profile-list">
-              <li><strong>Name:</strong> {{ site.profile.name }}</li>
-              <li><strong>Birthday:</strong> {{ site.profile.birthday }}</li>
-              <li><strong>Location:</strong> {{ site.profile.location }}</li>
-              <li><strong>School:</strong> {{ site.profile.school }}</li>
-              <li><strong>Hobbies:</strong> {{ site.profile.hobbies }}</li>
-            </ul>
+            <h2 class="h4 mb-3">About</h2>
+            <div class="profile-info-grid">
+              <div class="profile-item clickable-card" data-profile="birthday">
+                <span class="profile-icon">🎂</span>
+                <div class="profile-detail">
+                  <span class="profile-label">Birthday</span>
+                  <span class="profile-value">{{ site.profile.birthday }}</span>
+                </div>
+              </div>
+              <div class="profile-item clickable-card" data-profile="location">
+                <span class="profile-icon">📍</span>
+                <div class="profile-detail">
+                  <span class="profile-label">Location</span>
+                  <span class="profile-value">{{ site.profile.location }}</span>
+                </div>
+              </div>
+              <div class="profile-item clickable-card" data-profile="school">
+                <span class="profile-icon">🎓</span>
+                <div class="profile-detail">
+                  <span class="profile-label">School</span>
+                  <span class="profile-value">{{ site.profile.school }}</span>
+                </div>
+              </div>
+              <div class="profile-item clickable-card" data-profile="hobbies">
+                <span class="profile-icon">🎨</span>
+                <div class="profile-detail">
+                  <span class="profile-label">Hobbies</span>
+                  <span class="profile-value">{{ site.profile.hobbies }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 毛玻璃弹窗 -->
+            <div id="profileModal" class="profile-modal" style="display: none;">
+              <div class="profile-modal-backdrop" id="profileModalBackdrop"></div>
+              <div class="profile-modal-content">
+                <div class="profile-modal-header">
+                  <div class="profile-modal-titles">
+                    <h3 id="profileModalTitle">Title</h3>
+                    <p id="profileModalSubtitle" class="profile-modal-subtitle">Subtitle</p>
+                  </div>
+                  <button class="profile-modal-close" id="profileModalClose">×</button>
+                </div>
+                <div class="profile-modal-body">
+                  <p id="profileModalDescription">Description</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 配置数据 -->
+            <script type="application/json" id="profileDetailsData">
+              {
+                "birthday": {
+                  "title": "{{ site.profile.details.birthday.title }}",
+                  "value": "{{ site.profile.birthday }}",
+                  "description": "{{ site.profile.details.birthday.description }}"
+                },
+                "location": {
+                  "title": "{{ site.profile.details.location.title }}",
+                  "value": "{{ site.profile.location }}",
+                  "description": "{{ site.profile.details.location.description }}"
+                },
+                "school": {
+                  "title": "{{ site.profile.details.school.title }}",
+                  "value": "{{ site.profile.school }}",
+                  "description": "{{ site.profile.details.school.description }}"
+                },
+                "hobbies": {
+                  "title": "{{ site.profile.details.hobbies.title }}",
+                  "value": "{{ site.profile.hobbies }}",
+                  "description": "{{ site.profile.details.hobbies.description }}"
+                }
+              }
+            </script>
           </div>
         </div>
       </div>
