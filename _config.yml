@@ -45,13 +45,13 @@ profile:
   details:
     birthday:
       title: "Birthday"
-      description: "Born on September 4th, 2006. A Gen Z developer passionate about retro gaming aesthetics and modern web technologies."
+      description: "Born on September 4th, 2006. A Gen Z developer passionate about retro gaming aesthetics and modern technologies."
     location:
       title: "Location"
       description: "Currently living in Harrisburg, Pennsylvania, USA. Enjoying the blend of small-town charm and tech opportunities."
     school:
       title: "School"
-      description: "Studying at Penn State Harrisburg, focusing on computer science and digital arts. Active in campus tech communities."
+      description: "Studying at Penn State Harrisburg, focusing on computer science and engineering. Active in campus tech communities."
     hobbies:
       title: "Hobbies"
-      description: "Passionate about building detailed plastic model kits, creating pixel art with limited color palettes, and developing games in PICO-8. Always exploring the intersection of physical and digital creativity."
+      description: "Passionate about building detailed plastic aircraft model kits, creating pixel art with limited color palettes, and developing games and softwares in PICO-8. Always exploring the intersection of physical and digital creativity."
