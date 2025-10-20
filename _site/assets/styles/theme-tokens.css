@@ -608,6 +608,221 @@ html[data-color-mode="dark"] .card-tag {
 html[data-color-mode="dark"] .sidebar-divider { 
   border-top: 1px solid var(--border-dark); 
 }
+
+/* 响应式个人信息网格布局 */
+.profile-info-grid {
+  display: grid;
+  gap: 0.75rem;
+  /* 桌面端：单列布局 */
+  grid-template-columns: 1fr;
+}
+
+/* 手机端：两列布局，充分利用空间 */
+@media (max-width: 767.98px) {
+  .profile-info-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    padding-right: 1rem; /* 右边增加边距 */
+  }
+}
+
+.profile-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.625rem; /* 减少padding */
+  height: 3rem; /* 降低固定高度 */
+  overflow: hidden; /* 超出隐藏 */
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background-color .12s ease;
+  cursor: pointer;
+}
+
+/* 统一背景色 - 与其他卡片保持一致 */
+html[data-color-mode="light"] .profile-item { 
+  border-color: var(--border-light); 
+  background: #fff; 
+}
+
+html[data-color-mode="dark"] .profile-item { 
+  border-color: var(--border-dark); 
+  background: #0f141a; 
+}
+
+.profile-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.profile-icon {
+  font-size: 1rem;
+  line-height: 1;
+  margin-top: 0.125rem;
+}
+
+.profile-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+  min-width: 0; /* 防止文字溢出 */
+}
+
+.profile-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #656d76;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  line-height: 1;
+}
+
+.profile-value {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #24292f;
+  line-height: 1.2;
+  /* 单行省略号显示 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 个人信息弹窗样式 */
+.profile-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.profile-modal-content {
+  position: relative;
+  max-width: 400px;
+  width: 90%;
+  max-height: 80vh;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.profile-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.profile-modal-titles {
+  flex: 1;
+}
+
+.profile-modal-header h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #24292f;
+}
+
+.profile-modal-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #656d76;
+  opacity: 0.8;
+}
+
+.profile-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #656d76;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.profile-modal-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #24292f;
+}
+
+.profile-modal-body {
+  padding: 1.25rem;
+}
+
+.profile-modal-body p {
+  margin: 0;
+  line-height: 1.5;
+  color: #656d76;
+}
+
+/* 深色模式弹窗 */
+html[data-color-mode="dark"] .profile-modal-content {
+  background: rgba(13, 17, 23, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-color-mode="dark"] .profile-modal-header {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-color-mode="dark"] .profile-modal-header h3 {
+  color: #f0f6fc;
+}
+
+html[data-color-mode="dark"] .profile-modal-subtitle {
+  color: #8b949e;
+}
+
+html[data-color-mode="dark"] .profile-modal-close {
+  color: #8b949e;
+}
+
+html[data-color-mode="dark"] .profile-modal-close:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #f0f6fc;
+}
+
+html[data-color-mode="dark"] .profile-modal-body p {
+  color: #8b949e;
+}
+
+html[data-color-mode="dark"] .profile-label {
+  color: #8b949e;
+}
+
+html[data-color-mode="dark"] .profile-value {
+  color: #f0f6fc;
+}
+
 .profile-list li { margin:.25rem 0; line-height:1.35; }
 .inline-icon { vertical-align:text-bottom; }
 

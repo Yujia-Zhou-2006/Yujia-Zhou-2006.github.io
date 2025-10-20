@@ -310,4 +310,73 @@
       checkAvailableAvatars();
     }
   });
+
+  // 个人信息卡片点击功能
+  document.addEventListener('click', function(e) {
+    const card = e.target.closest('.clickable-card');
+    if (!card) return;
+
+    const profileType = card.getAttribute('data-profile');
+    const dataScript = document.getElementById('profileDetailsData');
+    
+    if (!dataScript || !profileType) return;
+
+    try {
+      const profileData = JSON.parse(dataScript.textContent);
+      const data = profileData[profileType];
+      
+      if (!data) return;
+
+      // 显示弹窗
+      showProfileModal(data.title, data.value, data.description);
+    } catch (error) {
+      console.error('Error parsing profile data:', error);
+    }
+  });
+
+  function showProfileModal(title, value, description) {
+    const modal = document.getElementById('profileModal');
+    const titleElement = document.getElementById('profileModalTitle');
+    const subtitleElement = document.getElementById('profileModalSubtitle');
+    const descElement = document.getElementById('profileModalDescription');
+    
+    if (!modal || !titleElement || !subtitleElement || !descElement) return;
+
+    titleElement.textContent = title;
+    subtitleElement.textContent = value;
+    descElement.textContent = description;
+    modal.style.display = 'flex';
+    
+    // 防止body滚动
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hideProfileModal() {
+    const modal = document.getElementById('profileModal');
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+
+  // 弹窗关闭事件
+  document.addEventListener('DOMContentLoaded', function() {
+    const closeBtn = document.getElementById('profileModalClose');
+    const backdrop = document.getElementById('profileModalBackdrop');
+    
+    if (closeBtn) {
+      closeBtn.addEventListener('click', hideProfileModal);
+    }
+    
+    if (backdrop) {
+      backdrop.addEventListener('click', hideProfileModal);
+    }
+    
+    // ESC键关闭
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        hideProfileModal();
+      }
+    });
+  });
 })();
