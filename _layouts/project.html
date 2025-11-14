@@ -2,7 +2,7 @@
 layout: default
 ---
 <article class="markdown-body">
-  <header class="mb-3">
+  <header class="mb-3 fade-layer-0">
     <h1 class="f2-light">{{ page.title }}</h1>
     {% if page.subtitle %}<p class="lead">{{ page.subtitle }}</p>{% endif %}
     <p class="color-fg-muted">
@@ -17,5 +17,7 @@ layout: default
       </p>
     {% endif %}
   </header>
-  {{ content }}
+  <div class="fade-layer-1">
+    {{ content }}
+  </div>
 </article>

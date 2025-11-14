@@ -1,12 +1,12 @@
 ---
 layout: default
 ---
-<header class="mb-4 text-center">
+<header class="mb-4 text-center fade-layer-0">
   <h1 class="f2-light">Blog</h1>
 </header>
 <div class="d-flex flex-column align-items-center">
   <div style="display:none;">{% include tabs.html %}</div>
-  <div class="fixed-grid-container mt-3">
+  <div class="fixed-grid-container mt-3 fade-layer-1">
     {% for post in site.posts %}
       <div class="fixed-grid-item project-card" data-type="all">
         {% include card.html item=post type='post' %}

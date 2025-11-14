@@ -284,6 +284,30 @@
     }, 10); // 很短的延迟，确保图片加载开始
   }
   
+  // 页面分层淡入动画控制
+  document.addEventListener('DOMContentLoaded', function(){
+    // 延迟一点时间让页面完全渲染
+    setTimeout(() => {
+      const fadeContainer = document.querySelector('.page-fade-container');
+      if (fadeContainer) {
+        fadeContainer.classList.add('loaded');
+        
+        // 可选：添加动画完成后的回调
+        const lastLayer = fadeContainer.querySelector('.fade-layer-5');
+        if (lastLayer) {
+          const handleTransitionEnd = function(e) {
+            if (e.target === lastLayer && e.propertyName === 'opacity') {
+              // 所有分层动画完成
+              console.log('分层动画完成');
+              lastLayer.removeEventListener('transitionend', handleTransitionEnd);
+            }
+          };
+          lastLayer.addEventListener('transitionend', handleTransitionEnd);
+        }
+      }
+    }, 100);
+  });
+
   // 页面加载时恢复用户选择的头像（优化版）
   document.addEventListener('DOMContentLoaded', function(){
     const avatar = document.getElementById('profileAvatar');
@@ -347,6 +371,11 @@
     descElement.textContent = description;
     modal.style.display = 'flex';
     
+    // 触发动画
+    setTimeout(() => {
+      modal.classList.add('show');
+    }, 10);
+    
     // 防止body滚动
     document.body.style.overflow = 'hidden';
   }
@@ -354,13 +383,22 @@
   function hideProfileModal() {
     const modal = document.getElementById('profileModal');
     if (modal) {
-      modal.style.display = 'none';
+      modal.classList.remove('show');
+      // 等待动画完成后隐藏
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
       document.body.style.overflow = '';
     }
   }
 
   // 弹窗关闭事件
   document.addEventListener('DOMContentLoaded', function() {
+    // 标记页面已加载，确保淡入效果完成
+    setTimeout(() => {
+      document.documentElement.classList.add('loaded');
+    }, 400);
+    
     const closeBtn = document.getElementById('profileModalClose');
     const backdrop = document.getElementById('profileModalBackdrop');
     
@@ -377,6 +415,34 @@
       if (e.key === 'Escape') {
         hideProfileModal();
       }
+    });
+
+    // 鼠标光晕效果
+    const cards = document.querySelectorAll('.card-like');
+    const profileItems = document.querySelectorAll('.profile-item');
+    
+    // 为卡片添加光晕效果
+    cards.forEach(card => {
+      card.addEventListener('mousemove', function(e) {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        
+        card.style.setProperty('--mouse-x', `${x}%`);
+        card.style.setProperty('--mouse-y', `${y}%`);
+      });
+    });
+
+    // 为个人信息卡片添加光晕效果
+    profileItems.forEach(item => {
+      item.addEventListener('mousemove', function(e) {
+        const rect = item.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        
+        item.style.setProperty('--mouse-x', `${x}%`);
+        item.style.setProperty('--mouse-y', `${y}%`);
+      });
     });
   });
 })();
