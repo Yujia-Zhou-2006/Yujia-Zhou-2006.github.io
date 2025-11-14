@@ -9,17 +9,17 @@ layout: default
         <div class="d-flex flex-column flex-md-column">
           <div class="profile-info">
             <div class="d-flex flex-column flex-sm-row align-items-start gap-3">
-              <div class="profile-avatar-container">
+              <div class="profile-avatar-container fade-layer-0">
                 <img id="profileAvatar" src="{{ '/assets/avatar.jpg' | relative_url }}" alt="avatar" class="CircleBadge profile-avatar mb-4 mb-sm-0" style="width: 294px; height: 294px; object-fit: cover; background: #ddd; cursor: pointer;" data-action="toggle-avatar" />
               </div>
-              <div class="profile-text">
+              <div class="profile-text fade-layer-1">
                 <h2 class="h2 mb-2 name-responsive">{{ site.profile.name }}</h2>
                 <p class="text-gray mb-3">{{ site.profile.bio }}</p>
               </div>
             </div>
             <hr class="my-3 sidebar-divider">
           </div>
-          <div class="about-content">
+          <div class="about-content fade-layer-2">
             <h2 class="h4 mb-3">About</h2>
             <div class="profile-info-grid">
               <div class="profile-item clickable-card" data-profile="birthday">
@@ -51,61 +51,18 @@ layout: default
                 </div>
               </div>
             </div>
-            
-            <!-- 毛玻璃弹窗 -->
-            <div id="profileModal" class="profile-modal" style="display: none;">
-              <div class="profile-modal-backdrop" id="profileModalBackdrop"></div>
-              <div class="profile-modal-content">
-                <div class="profile-modal-header">
-                  <div class="profile-modal-titles">
-                    <h3 id="profileModalTitle">Title</h3>
-                    <p id="profileModalSubtitle" class="profile-modal-subtitle">Subtitle</p>
-                  </div>
-                  <button class="profile-modal-close" id="profileModalClose">×</button>
-                </div>
-                <div class="profile-modal-body">
-                  <p id="profileModalDescription">Description</p>
-                </div>
-              </div>
-            </div>
-            
-            <!-- 配置数据 -->
-            <script type="application/json" id="profileDetailsData">
-              {
-                "birthday": {
-                  "title": "{{ site.profile.details.birthday.title }}",
-                  "value": "{{ site.profile.birthday }}",
-                  "description": "{{ site.profile.details.birthday.description }}"
-                },
-                "location": {
-                  "title": "{{ site.profile.details.location.title }}",
-                  "value": "{{ site.profile.location }}",
-                  "description": "{{ site.profile.details.location.description }}"
-                },
-                "school": {
-                  "title": "{{ site.profile.details.school.title }}",
-                  "value": "{{ site.profile.school }}",
-                  "description": "{{ site.profile.details.school.description }}"
-                },
-                "hobbies": {
-                  "title": "{{ site.profile.details.hobbies.title }}",
-                  "value": "{{ site.profile.hobbies }}",
-                  "description": "{{ site.profile.details.hobbies.description }}"
-                }
-              }
-            </script>
           </div>
         </div>
       </div>
     </div>
   </aside>
 
-  <section class="flex-grow-1" style="min-width: 0; width: 100%;">
+  <section class="flex-grow-1 fade-layer-3" style="min-width: 0; width: 100%;">
     <header class="mb-4">
       <h1 class="f2-light m-0">{{ site.tagline }}</h1>
     </header>
 
-    <section class="mb-5">
+    <section class="mb-5 fade-layer-4">
   <h2 class="h4 mb-3">Pined</h2>
       <div class="d-flex flex-wrap gutter-condensed home-card-row">
         {% assign pinned = site.pinned_projects %}
@@ -121,7 +78,7 @@ layout: default
       </div>
     </section>
 
-    <section>
+    <section class="fade-layer-5">
       <h2 class="h4 mb-3">Latest Blog</h2>
       <div class="d-flex flex-wrap gutter-condensed home-card-row">
         {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
@@ -134,3 +91,46 @@ layout: default
     </section>
   </section>
 </div>
+
+<!-- 个人信息弹窗 - 恢复原结构 -->
+<div id="profileModal" class="profile-modal" style="display: none;">
+  <div class="profile-modal-backdrop" id="profileModalBackdrop"></div>
+  <div class="profile-modal-content">
+    <div class="profile-modal-header">
+      <div class="profile-modal-titles">
+        <h3 id="profileModalTitle">Title</h3>
+        <p id="profileModalSubtitle" class="profile-modal-subtitle">Subtitle</p>
+      </div>
+      <button class="profile-modal-close" id="profileModalClose">×</button>
+    </div>
+    <div class="profile-modal-body">
+      <p id="profileModalDescription">Description</p>
+    </div>
+  </div>
+</div>
+
+<!-- 配置数据 -->
+<script type="application/json" id="profileDetailsData">
+  {
+    "birthday": {
+      "title": "{{ site.profile.details.birthday.title }}",
+      "value": "{{ site.profile.birthday }}",
+      "description": "{{ site.profile.details.birthday.description }}"
+    },
+    "location": {
+      "title": "{{ site.profile.details.location.title }}",
+      "value": "{{ site.profile.location }}",
+      "description": "{{ site.profile.details.location.description }}"
+    },
+    "school": {
+      "title": "{{ site.profile.details.school.title }}",
+      "value": "{{ site.profile.school }}",
+      "description": "{{ site.profile.details.school.description }}"
+    },
+    "hobbies": {
+      "title": "{{ site.profile.details.hobbies.title }}",
+      "value": "{{ site.profile.hobbies }}",
+      "description": "{{ site.profile.details.hobbies.description }}"
+    }
+  }
+</script>

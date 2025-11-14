@@ -1,12 +1,12 @@
 ---
 layout: default
 ---
-<header class="mb-4 text-center">
+<header class="mb-4 text-center fade-layer-0">
   <h1 class="f2-light">Projects</h1>
 </header>
 <div class="d-flex flex-column align-items-center">
-  {% include tabs.html %}
-  <div class="fixed-grid-container mt-3">
+  <div class="fade-layer-1">{% include tabs.html %}</div>
+  <div class="fixed-grid-container mt-3 fade-layer-2">
     {%- assign items = site.projects | sort: 'year' | reverse -%}
     {%- for prj in items -%}
       <div class="fixed-grid-item project-card" data-type="{{ prj.type }}">

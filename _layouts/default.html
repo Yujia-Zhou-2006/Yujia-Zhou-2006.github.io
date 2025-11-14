@@ -26,10 +26,12 @@
 </head>
 <body>
   {% include header.html %}
-  <main class="container-xl px-3 my-4 my-md-6">
-    {{ content }}
-  </main>
-  {% include footer.html %}
+  <div class="page-fade-container">
+    <main class="container-xl px-3 my-4 my-md-6">
+      {{ content }}
+    </main>
+    {% include footer.html %}
+  </div>
   <script src="{{ '/assets/scripts/theme-toggle.js' | relative_url }}"></script>
   <script src="{{ '/assets/scripts/copy-wechat.js' | relative_url }}"></script>
 </body>

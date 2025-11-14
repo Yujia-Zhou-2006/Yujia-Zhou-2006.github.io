@@ -67,12 +67,13 @@
 <!-- Floating theme toggle for mobile -->
 <button class="theme-fab d-only-mobile" data-action="toggle-theme" aria-label="Theme toggle"></button>
 
-  <main class="container-xl px-3 my-4 my-md-6">
-    <header class="mb-4 text-center">
+  <div class="page-fade-container">
+    <main class="container-xl px-3 my-4 my-md-6">
+      <header class="mb-4 text-center fade-layer-0">
   <h1 class="f2-light">Projects</h1>
 </header>
 <div class="d-flex flex-column align-items-center">
-  <div class="UnderlineNav">
+  <div class="fade-layer-1"><div class="UnderlineNav">
   <nav class="UnderlineNav-body d-flex justify-content-center">
     
     
@@ -98,8 +99,8 @@
     
   </nav>
 </div>
-
-  <div class="fixed-grid-container mt-3"><div class="fixed-grid-item project-card" data-type="models">
+</div>
+  <div class="fixed-grid-container mt-3 fade-layer-2"><div class="fixed-grid-item project-card" data-type="models">
         <a class="card-like linked d-block p-3 color-fg-default no-underline" href="/projects/bf-109-f4-models/">
   <div class="card-body" style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0;">
     <div class="d-flex flex-justify-between mb-2">
@@ -243,8 +244,8 @@
 </div>
 <script src="/assets/scripts/project-filter.js"></script>
 
-  </main>
-  <footer class="width-full site-footer">
+    </main>
+    <footer class="width-full site-footer">
   <div class="container-xl px-3 py-2 d-flex flex-justify-between flex-items-center">
     <p class="mb-0">© Yujia Zhou</p>
     <div class="d-flex flex-wrap flex-justify-center gap-3">
@@ -285,6 +286,7 @@
   </div>
 </footer>
 
+  </div>
   <script src="/assets/scripts/theme-toggle.js"></script>
   <script src="/assets/scripts/copy-wechat.js"></script>
 </body>
