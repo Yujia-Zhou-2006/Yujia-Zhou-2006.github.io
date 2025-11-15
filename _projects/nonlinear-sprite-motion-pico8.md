@@ -1,7 +1,7 @@
 ---
 slug: 'nonlinear-sprite-motion-pico8'
 title: 'Sprite & Graphics Nonlinear Motion System'
-subtitle: '为贺卡而写；后抽离为可复用模块｜燃尽了，对于不该存在的事'
+subtitle: '为贺卡而写；后抽离为可复用模块'
 year: 2024
 type: 'pico8'
 pinned: true
@@ -11,4 +11,4 @@ tags: ['pico8', 'module', 'animation']
 links: {}
 layout: project
 ---
-TBD
+占位符QAQ
