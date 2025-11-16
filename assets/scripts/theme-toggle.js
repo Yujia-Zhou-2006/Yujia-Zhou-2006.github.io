@@ -445,4 +445,49 @@
       });
     });
   });
+
+  // 图片描述功能 - 知乎风格
+  function addImageCaptions() {
+    const markdownBody = document.querySelector('.markdown-body');
+    if (!markdownBody) return;
+    
+    const images = markdownBody.querySelectorAll('img[alt]:not([data-caption-added])');
+    
+    images.forEach(img => {
+      const alt = img.getAttribute('alt');
+      if (alt && alt.trim()) {
+        // 标记已处理
+        img.setAttribute('data-caption-added', 'true');
+        
+        // 创建描述元素
+        const caption = document.createElement('div');
+        caption.className = 'image-caption';
+        caption.textContent = alt;
+        
+        // 插入描述到图片后面
+        img.parentNode.insertBefore(caption, img.nextSibling);
+      }
+    });
+  }
+
+  // 页面加载完成时添加图片描述
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addImageCaptions);
+  } else {
+    addImageCaptions();
+  }
+
+  // 监听动态内容变化
+  if (window.MutationObserver) {
+    const observer = new MutationObserver(() => {
+      addImageCaptions();
+    });
+    
+    if (document.body) {
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    }
+  }
 })();

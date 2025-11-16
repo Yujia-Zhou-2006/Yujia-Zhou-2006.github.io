@@ -1532,3 +1532,179 @@ html[data-color-mode="dark"] .profile-avatar {
     margin-bottom: 0 !important;
   }
 }
+
+/* =======================================
+   Markdown Content Styling Enhancements
+   ======================================= */
+
+/* 标题样式 - 添加下划线效果 */
+.markdown-body h1 {
+  border-bottom: 3px solid rgba(31, 35, 40, 0.2) !important;
+  padding-bottom: 0.75rem !important;
+  margin-bottom: 1.5rem !important;
+  margin-top: 2rem !important;
+  font-weight: 700 !important;
+  font-size: 2rem !important;
+}
+
+.markdown-body h2 {
+  border-bottom: 2px solid rgba(31, 35, 40, 0.15) !important;
+  padding-bottom: 0.75rem !important;
+  margin-bottom: 1.5rem !important;
+  margin-top: 2rem !important;
+  font-weight: 600 !important;
+}
+
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  border-bottom: 1px solid rgba(31, 35, 40, 0.1) !important;
+  padding-bottom: 0.5rem !important;
+  margin-bottom: 1rem !important;
+  margin-top: 1.5rem !important;
+}
+
+/* 深色模式下的标题横线 */
+html[data-color-mode="dark"] .markdown-body h1 {
+  border-bottom-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+html[data-color-mode="dark"] .markdown-body h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+html[data-color-mode="dark"] .markdown-body h3,
+html[data-color-mode="dark"] .markdown-body h4,
+html[data-color-mode="dark"] .markdown-body h5,
+html[data-color-mode="dark"] .markdown-body h6 {
+  border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* 图片描述样式 - 知乎风格 */
+.markdown-body img {
+  display: block;
+  margin: 1.5rem auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.markdown-body img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 图片容器和描述 */
+.markdown-body p:has(img) {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.markdown-body img + em,
+.markdown-body img[alt]:after {
+  content: attr(alt);
+  display: block;
+  text-align: center;
+  font-style: normal;
+  color: rgba(87, 96, 106, 0.8) !important;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  padding: 0 1rem;
+  line-height: 1.4;
+}
+
+/* 使用JavaScript实现图片描述的备选方案 */
+.image-caption {
+  display: block !important;
+  text-align: center !important;
+  font-size: 0.9rem !important;
+  color: rgba(87, 96, 106, 0.8) !important;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.5rem !important;
+  font-style: italic !important;
+  line-height: 1.4 !important;
+  padding: 0 1rem !important;
+  font-weight: 400 !important;
+}
+
+/* 深色模式下的图片效果 */
+html[data-color-mode="dark"] .markdown-body img {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+html[data-color-mode="dark"] .markdown-body img:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+html[data-color-mode="dark"] .image-caption {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* 引用块样式 - 更明显的颜色区分 */
+.markdown-body blockquote {
+  border-left: 4px solid #0969da;
+  background-color: rgba(9, 105, 218, 0.05);
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(9, 105, 218, 0.1);
+}
+
+.markdown-body blockquote::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, #0969da, #1f6feb);
+  border-radius: 2px 0 0 2px;
+}
+
+.markdown-body blockquote p {
+  margin: 0;
+  color: rgba(31, 35, 40, 0.9) !important;
+  font-style: italic;
+}
+
+.markdown-body blockquote p:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+/* 深色模式下的引用块 */
+html[data-color-mode="dark"] .markdown-body blockquote {
+  border-left-color: #58a6ff;
+  background-color: rgba(88, 166, 255, 0.08);
+  box-shadow: 0 2px 8px rgba(88, 166, 255, 0.15);
+}
+
+html[data-color-mode="dark"] .markdown-body blockquote::before {
+  background: linear-gradient(to bottom, #58a6ff, #79c0ff);
+}
+
+html[data-color-mode="dark"] .markdown-body blockquote p {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+html[data-color-mode="dark"] .image-caption {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* 移动端优化 */
+@media (max-width: 767.98px) {
+  .markdown-body blockquote {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+  }
+  
+  .markdown-body img {
+    margin: 1rem auto;
+  }
+  
+  .image-caption {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+}
