@@ -1,22 +1,36 @@
 ---
 layout: post
-slug: blog-placeholder-2
-title: "Blog Placeholder 2"
-date: 2025-10-06 11:00:00 +0800
-tags: [test, design, responsive]
-summary: "Another placeholder blog post to test card layout responsiveness and behavior."
+slug: 更新换代：从Pixel Buds Pro到AirPods Pro3
+title: "更新换代：从Pixel Buds Pro到AirPods Pro3"
+date: 2025-10-29
+tags: [tech, review]
+summary: "experience of switch my TWS earphone to AirPods Pro3"
 ---
+> Nothing lasts forever — especially electronics.
 
-This is the second placeholder blog post to test how multiple blog entries affect the card layout and responsive behavior.
+## 1: 前言
+大概是在高二的时候，家父出差带回了几对 Pixel Buds Pro。黑白拼色的外观、细腻的磨砂壳、巧妙的合模线隐藏处理、盖子开合的扎实手感，再加上“我爸可能参与了电池部分”的那点私人滤镜，一上手我就喜欢得不得了。
 
-## Testing Content
+不得不说，谷歌的硬件质感真的没得说。我用过两部 Pixel 手机，还短暂体验过 Pixel Fold，谷歌在表面工艺和活动部件手感上的把控一向稳。而 Pixel Buds Pro 也继承了这种触感魅力，让我直接爱不释手。家父大概也是看出来了（太明显了），几天后便把它送给了我。
 
-This post has different content length to test how cards with varying content heights behave in the grid layout.
+第一次戴上耳机、随着一声提示音、降噪瞬间开启的那一刻，将我与嘈杂的城市隔离开来，世界安静得有些不真实。我初中在 Apple Store 里第一次体验 ANC 时就被震撼过，如今终于有一副搭载这种科技的耳机，心情可想而知。就这样，这副谷歌的耳机陪伴了我大半个高中生活。
 
-### Subsection
 
-this is a test
+## 2: 遇见
+高中毕业，我的人生迈入下一个阶段。我被PSU Harrisburg录取，来到米德尔敦。在这之后，我的Pixel Buds pro似乎就一直不太给力。可能是宿舍中的电子产品过多导致干扰，或者说是自然的老化，信号连接总是时断时续，有时打开盖子却只能连接一只耳朵。时间一长便受不了了，毕竟总是在想要听音乐的时候不能丝滑流畅的一步到位还是太搞了，再加上在快四年的陪伴中，外壳不再细腻，哪怕爱心呵护也免不了打油，染色和划痕，不由得萌生了换掉这位老伙计的想法。
 
-## More Content
+机缘巧合之下，结识了友人‘王’。 恰巧她前一段时间购入了AirPods Pro3，询问了一些必须亲身体验才能知道的细节，由于之前自己也做了许多攻略，看着没问题就果断购入了。不过到手之后，依然出现了一些没有预料到的状况，也充分的体验到了和谷歌的Pixel Buds pro 的差别。
 
-Additional content to make this post slightly longer than the first placeholder to test height consistency in the card layout.
+### 2.1: 音色调教
+Pixel Buds Pro的音色在低频上偏重，整体感觉比较饱满，听着很“带劲”；而AirPods Pro3却是比较均衡，在各个方面都是比较清水，细腻，没有那种低频冲击的感觉。唯一有点遗憾的是高频有点呲了，听特定的音乐的高频部分可能会出现刺耳的感觉。这部分差别几乎是上手就能感受到的。刚从 Pixel Buds Pro 换到 AirPods Pro3 时，确实需要一点时间适应。
+
+### 2.2: 形状适配
+另一个对于我最初对AirPods Pro3体验的影响因素是它的形状。外观上来说，这款Pro版本对比前几代的数字版AirPods的修长细丽显得更加圆润，缩小了耳机柄但是增宽了其与头部的距离，导致整个耳机看起来有一种浮空感。Apple对于其内部贴合耳朵的表面的设计也和Pixel Buds Pro不一样。Pixel Buds Pro的整体都是镶嵌在耳朵内部，由耳朵软骨包住固定，而AirPods Pro3则是部分依赖于其耳塞在耳洞的摩擦力。这个设计上的区别最开始让我的耳朵吃了很大的苦头，由于对软骨有一定的压迫，戴上时间久了就会痛，甚至渗血。为了克服这个，我便一有空便戴它，也就是磨耳朵逼迫自己的耳朵适应这个形状。一周之后，早上醒来发现耳机仍然在我的耳朵上没有因为异物感摘下来，便是彻底练成了。
+
+### 2.3: Apple独家适配
+这是AirPods Pro3一个非常强大的方面。Apple设备之前的无缝的音频转移，使得它可以在我使用电脑或其它设备播放音频的时候，耳机丝滑自动连接上，省去了需要手动切换蓝牙的步骤。这对于日常的体验是一个很大的加分项，也是其他所有非Apple耳机无法做到的。
+
+## 3：结语
+Pixel Buds Pro 没能陪我走进大学生活，但它陪我完成了整段高中。现在 AirPods Pro3 接手了新的阶段，我明白，设备终究会老化，但它们承载过的那些时刻，却会随着我们一起留在记忆里。
+
+换代不只发生在耳机上，也发生在生活本身。
